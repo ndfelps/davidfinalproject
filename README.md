@@ -14,13 +14,21 @@ The front page will also feature a list of the top ten most popular champions. T
 
 Eventually, we will track stats for each summoner, and offer feedback based on their performance in each game. The feedback will be automagically generated based on performance, and will offer a list of potential items that they should have purchased.
 
+## Current known limitations.
+
+Riot currently allows me only 10 requests every 10 seconds, up to 500 requests every 10 minutes. Because of this, I will try to keep as much information static as possible, so the most popular champions and free champion rotation will only be updated on a weekly basis.
+
 ## Tools that will be used
 
- JQuery
- Backbone
- React
- Bootstrap
- The Riot API
+ - JQuery
+ 
+ - Backbone
+ 
+ - React
+ 
+ - Bootstrap
+ 
+ - The Riot API
  
 ## Other Information on this Project
 
