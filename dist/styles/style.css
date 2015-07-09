@@ -9,17 +9,18 @@ body {
 	border: 1px solid transparent;
 }
 header {
-	background-color: rgb(39, 70, 100);
+	background-color: black;
 	color: white;
 	text-align: center;
 	overflow: hidden;
-	padding-top: 1.5%
+	padding-top: 1.5%;
+	display: table;
+	width: 100%;
 }
 #side {
-	height: 90%;
-	background-color: rgb(100, 100, 100);
-	width: 20%;	
+	background-color: rgb(100, 100, 100);	
 	float: left;
+	height: 100%;
 }
 .topNav {
 	float: left;
@@ -50,4 +51,51 @@ a {
 }
 #sett {
 	margin-left: 80px;
+}
+.error {
+    font-size: 0.8em;
+    color: red;
+    display: none;
+    font-style: italic;
+}
+.regLink {
+	color: red;
+}
+.logoCon {
+	padding-top: 20px;
+	display: table-cell;
+	vertical-align: center;
+}
+.logo {
+	background-image: url(http://orig12.deviantart.net/00f5/f/2012/178/8/0/league_of_legends_v3_by_polishxcii-d554d4f.png) !important;
+	width: 90px;
+	height: 90px;
+	background-repeat: no-repeat;
+	z-index: -1;
+	background-size: cover;
+	padding-bottom: 20px;
+	margin-bottom: 20px;
+}
+.sideCon {
+	border-bottom-color: black;
+	border-bottom-width: 2px;
+	border-bottom-style: solid; 
+}
+.free {
+	color: white;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	font-size: 24px;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	padding-left: 18px;
+	padding-top: 10px;
+	height: 60px;
+}
+.title {
+	font-size: 12px;
+}
+.signUpSuccess {
+	display: none;
 }

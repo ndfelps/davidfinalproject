@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
 	<link rel="stylesheet" type="text/css" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="./styles/style.css">
 	<title></title>
 </head>
 <body>
 	<header>
-		<a href = '#login' class = "topNav">Login</a>
-		<a href = '#settings' class = "topNav" id = "sett">Settings</a>
+		<section>
+			<a href = '#login' class = "topNav">Login</a>
+			<a href = '#settings' class = "topNav" id = "sett">Settings</a>
+		</section>
+		<section class = 'logoCon'>
+			<a href - '#home'><div class = 'logo'></div></a>
+		</section>
 	</header>
 	<section id = 'side'>
-		<a href = "#1"><div class = 'con' id = 'ch1'><nav class = 'chLabel'>Chat Room #1</nav></div></a>
-		<a href = "#2"><div class = 'con' id = 'ch2'><nav class = 'chLabel'>Chat Room #2</nav></div></a>
-		<a href = "#3"><div class = 'con' id = 'ch3'><nav class = 'chLabel'>Chat Room #3</nav></div></a>
-		<a href = "#4"><div class = 'con' id = 'ch4'><nav class = 'chLabel'>Chat Room #4</nav></div></a>
+		<div class = 'con' id = 'ch1'>
+			<nav class = 'sideCon'>Free Champion Rotation</nav>
+			<div class = 'freeChamps'></div>
+		</div>
+		<div class = 'con' id = 'ch1'><nav class = 'sideCon'>Most Used Champions</nav></div>
+		<div class = 'con' id = 'ch2'><nav class = 'sideCon'>Recent Guides</nav></div>
 	</section>
 	<main id="container">
 		<h1></h1>
