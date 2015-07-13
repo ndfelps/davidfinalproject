@@ -23,10 +23,11 @@ header {
 	height: 100%;
 }
 .topNav {
-	float: left;
 	background-color: transparent;
-	width: 0;
+	width: 50px;
+	height: 20px;
 	font-size: 10px;
+	float: right;
 }
 ul {
 	font-size: 10px;
@@ -75,6 +76,7 @@ a {
 	background-size: cover;
 	padding-bottom: 20px;
 	margin-bottom: 20px;
+	margin-left: 140%;
 }
 .sideCon {
 	border-bottom-color: black;
@@ -99,3 +101,16 @@ a {
 .signUpSuccess {
 	display: none;
 }
+#container {
+	padding-left: 5px;
+	margin-left: 5px;
+}
+.logoutCon {
+	overflow: hidden;
+	margin: 0px;
+}
+.logoutCon:hover {
+	cursor: pointer;
+}
+
+

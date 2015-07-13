@@ -32545,6 +32545,21 @@ module.exports = React.createClass({
 'use strict';
 
 var React = require('react');
+var $ = require('jquery');
+var ref = new Firebase('https://lolresource.firebaseio.com');
+var Logout = require('./logout');
+var authData = ref.getAuth();
+
+function logArea() {
+	if (authData === null) {
+		$('.loginLink').show();
+		$('.logout').hide();
+	} else {
+		$('.loginLink').hide();
+		$('.logout').show();
+		React.render(React.createElement(Logout, null), document.querySelector('.logoutCon'));
+	}
+}
 
 module.exports = React.createClass({
 	displayName: 'exports',
@@ -32561,7 +32576,7 @@ module.exports = React.createClass({
 					{ className: 'login-tron page' },
 					React.createElement(
 						'div',
-						{ className: 'logo' },
+						null,
 						React.createElement(
 							'h1',
 							null,
@@ -32574,7 +32589,7 @@ module.exports = React.createClass({
 					{ className: 'login-input page' },
 					React.createElement(
 						'form',
-						null,
+						{ onSubmit: this.logIn },
 						React.createElement(
 							'h2',
 							null,
@@ -32604,108 +32619,795 @@ module.exports = React.createClass({
 				)
 			)
 		);
+	},
+	logIn: function logIn(e) {
+		e.preventDefault();
+		console.log('??');
+		var username = $('.userBox').val();
+		var password = $('.passBox').val();
+		if (username === '' && password === '') {} else {
+			ref.authWithPassword({
+				email: username,
+				password: password
+			}, function (error, authData) {
+				if (error) {
+					console.log('Login Failed!', error);
+				} else {
+					remember: 'sessionOnly';
+					console.log('Authenticated successfully with payload:', authData);
+					logArea();
+					window.location.hash = 'home';
+				}
+			});
+		}
 	}
 });
 
-},{"react":159}],162:[function(require,module,exports){
+},{"./logout":162,"jquery":4,"react":159}],162:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
+var ref = new Firebase('https://lolresource.firebaseio.com');
+var Login = require('./loginPage');
+var $ = require('jquery');
 
 module.exports = React.createClass({
     displayName: 'exports',
 
     render: function render() {
-        return React.createElement('section', null);
+        return React.createElement(
+            'a',
+            { onClick: this.logOut, className: 'topNav logout' },
+            'Log Out'
+        );
+    },
+    logOut: function logOut(e) {
+        ref.unauth();
+        window.location.hash = 'login';
+        $('.loginLink').show();
+        $('.logout').hide();
     }
 });
 
-},{"react":159}],163:[function(require,module,exports){
-"use strict";
+},{"./loginPage":161,"jquery":4,"react":159}],163:[function(require,module,exports){
+'use strict';
 
-var React = require("react");
+var React = require('react');
+var $ = require('jquery');
+
+var ref = new Firebase('https://lolresource.firebaseio.com');
+var guides = new Firebase('https://lolresource.firebaseio.com/guides');
+var authData = ref.getAuth();
 
 module.exports = React.createClass({
-	displayName: "exports",
+    displayName: 'exports',
 
-	render: function render() {
-		return React.createElement(
-			"section",
-			null,
-			React.createElement(
-				"div",
-				{ className: "login-signup" },
-				React.createElement(
-					"form",
-					null,
-					React.createElement(
-						"h2",
-						null,
-						"Or Sign Up!"
-					),
-					React.createElement("input", { type: "text", className: "firstName", placeholder: "First Name" }),
-					" ",
-					React.createElement(
-						"span",
-						{ className: "error firstError" },
-						"*you must ender a valid name"
-					),
-					React.createElement("br", null),
-					React.createElement("input", { type: "text", className: "lastName", placeholder: "Last Name" }),
-					" ",
-					React.createElement(
-						"span",
-						{ className: "error lastError" },
-						"*you must ender a valid name"
-					),
-					React.createElement("br", null),
-					React.createElement("input", { type: "text", className: "username", placeholder: "Username" }),
-					" ",
-					React.createElement(
-						"span",
-						{ className: "error signError" },
-						"*you must ender a valid username"
-					),
-					React.createElement("br", null),
-					React.createElement("input", { type: "text", className: "email", placeholder: "Email" }),
-					" ",
-					React.createElement(
-						"span",
-						{ className: "error emailError" },
-						"*you must ender a valid email"
-					),
-					React.createElement("br", null),
-					React.createElement("input", { type: "password", className: "password", placeholder: "Password" }),
-					" ",
-					React.createElement(
-						"span",
-						{ className: "error passError" },
-						"*you must ender a valid password"
-					),
-					React.createElement("br", null),
-					React.createElement(
-						"button",
-						{ className: "signButton" },
-						"Submit"
-					)
-				)
-			),
-			React.createElement(
-				"section",
-				{ className: "signUpSuccess" },
-				"You have succesfully signed up! Click ",
-				React.createElement(
-					"a",
-					{ className: "regLink", href: "#login" },
-					"here"
-				),
-				" to log in!"
-			)
-		);
-	}
+    render: function render() {
+        return React.createElement(
+            'section',
+            null,
+            React.createElement(
+                'form',
+                { onSubmit: this.postGuide },
+                React.createElement(
+                    'div',
+                    { className: 'champSelect' },
+                    'Choose your champion... ',
+                    React.createElement('br', null),
+                    React.createElement(
+                        'select',
+                        { name: 'select', className: 'champion' },
+                        React.createElement(
+                            'option',
+                            { value: 'Aatrox' },
+                            'Aatrox'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Ahri' },
+                            'Ahri'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Akali' },
+                            'Akali'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Alistar' },
+                            'Alistar'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Anivia' },
+                            'Anivia'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Anivia' },
+                            'Anivia'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Annie' },
+                            'Annie'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Ashe' },
+                            'Ashe'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Azir' },
+                            'Azir'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Bard' },
+                            'Bard'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Blitzcrank' },
+                            'Blitzcrank'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Brand' },
+                            'Brand'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Braum' },
+                            'Braum'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Caitlyn' },
+                            'Caitlyn'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Cassiopeia' },
+                            'Cassiopeia'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Chogath' },
+                            'Cho\'Gath'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Corki' },
+                            'Corki'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Darius' },
+                            'Darius'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Diana' },
+                            'Diana'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'DrMundo' },
+                            'Dr. Mundo'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Draven' },
+                            'Draven'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Ekko' },
+                            'Ekko'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Elise' },
+                            'Elise'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Evelynn' },
+                            'Evelynn'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Ezreal' },
+                            'Ezreal'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Fiddlesticks' },
+                            'Fiddlesticks'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Fiora' },
+                            'Fiora'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Fizz' },
+                            'Fizz'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Galio' },
+                            'Galio'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Gangplank' },
+                            'Gangplank'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Garen' },
+                            'Garen'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Gnar' },
+                            'Gnar'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Gragas' },
+                            'Gragas'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Graves' },
+                            'Graves'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Hecarim' },
+                            'Hecarim'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Heimerdinger' },
+                            'Heimerdinger'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Irelia' },
+                            'Irelia'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Janna' },
+                            'Janna'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'JarvanIV' },
+                            'Jarvan IV'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Jax' },
+                            'Jax'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Jayce' },
+                            'Jayce'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Jinx' },
+                            'Jinx'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Kalista' },
+                            'Kalista'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Karma' },
+                            'Karma'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Karthus' },
+                            'Karthus'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Kassadin' },
+                            'Kassadin'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Katarina' },
+                            'Katarina'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Kayle' },
+                            'Kayle'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Kennen' },
+                            'Kennen'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Khazix' },
+                            'Kha\'zix'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'KogMaw' },
+                            'Kog\'Maw'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'LeBlanc' },
+                            'LeBlanc'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'LeeSin' },
+                            'Lee Sin'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Leona' },
+                            'Leona'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Lissandra' },
+                            'Lissandra'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Lucian' },
+                            'Lucian'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Lulu' },
+                            'Lulu'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Lux' },
+                            'Lux'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Malphite' },
+                            'Malphite'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Maokai' },
+                            'Maokai'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'MasterYi' },
+                            'Master Yi'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'MissFortune' },
+                            'Miss Fortune'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Mordekaiser' },
+                            'Mordekaiser'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Morgana' },
+                            'Morgana'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Nami' },
+                            'Nami'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Nasus' },
+                            'Nasus'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Nautilus' },
+                            'Nautilus'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Nidalee' },
+                            'Nidalee'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Nocturne' },
+                            'Nocturne'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Nunu' },
+                            'Nunu'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Olaf' },
+                            'Olaf'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Orianna' },
+                            'Orianna'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Pantheon' },
+                            'Pantheon'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Poppy' },
+                            'Poppy'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Quinn' },
+                            'Quinn'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Rammus' },
+                            'Rammus'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Reksai' },
+                            'Rek\'sai'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Renekton' },
+                            'Renekton'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Rengar' },
+                            'Rengar'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Riven' },
+                            'Riven'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Rumble' },
+                            'Rumble'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Ryze' },
+                            'Ryze'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Sejuani' },
+                            'Sejuani'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Shaco' },
+                            'Shaco'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Shen' },
+                            'Shen'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Shyvana' },
+                            'Shyvana'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Singed' },
+                            'Singed'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Sion' },
+                            'Sion'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Sivir' },
+                            'Sivir'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Skarner' },
+                            'Skarner'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Sona' },
+                            'Sona'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Soraka' },
+                            'Soraka'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Swain' },
+                            'Swain'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Syndra' },
+                            'Syndra'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Talon' },
+                            'Talon'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Taric' },
+                            'Taric'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Teemo' },
+                            'Teemo'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Thresh' },
+                            'Thresh'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Tristana' },
+                            'Tristana'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Trundle' },
+                            'Trundle'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Tryndamere' },
+                            'Tryndamere'
+                        ),
+                        React.createElement('option', { value: 'Twisted Fate' }),
+                        React.createElement(
+                            'option',
+                            { value: 'Twitch' },
+                            'Twitch'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Udyr' },
+                            'Udyr'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Urgot' },
+                            'Urgot'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Varus' },
+                            'Varus'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Vayne' },
+                            'Vayne'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Veigar' },
+                            'Veigar'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Velkoz' },
+                            'Velkoz'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Vi' },
+                            'Vi'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Viktor' },
+                            'Viktor'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Vladimir' },
+                            'Vladimir'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Volibear' },
+                            'Volibear'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Warwick' },
+                            'Warwick'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Wukong' },
+                            'Wukong'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Xerath' },
+                            'Xerath'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Xin Zhao' },
+                            'Xin Zhao'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Yasuo' },
+                            'Yasuo'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Yorick' },
+                            'Yorick'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Zac' },
+                            'Zac'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Zed' },
+                            'Zed'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Ziggs' },
+                            'Ziggs'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Zilean' },
+                            'Zilean'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'Zyra' },
+                            'Zyra'
+                        )
+                    ),
+                    ' ',
+                    React.createElement('br', null),
+                    'Choose your role... ',
+                    React.createElement('br', null),
+                    React.createElement(
+                        'select',
+                        { name: 'select', className: 'role' },
+                        React.createElement(
+                            'option',
+                            { value: 'top' },
+                            'Top'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'jungle' },
+                            'Jungle'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'mid' },
+                            'Mid'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'dps' },
+                            'DPS'
+                        ),
+                        React.createElement(
+                            'option',
+                            { value: 'support' },
+                            'Support'
+                        )
+                    ),
+                    React.createElement('br', null)
+                ),
+                'Title: ',
+                React.createElement('br', null),
+                React.createElement('input', { className: 'title', type: 'text' }),
+                React.createElement('br', null),
+                'Body:',
+                React.createElement('br', null),
+                React.createElement('input', { className: 'body', type: 'text' }),
+                React.createElement('br', null),
+                React.createElement(
+                    'button',
+                    { className: 'signButton' },
+                    'Submit'
+                )
+            )
+        );
+    },
+    postGuide: function postGuide(e) {
+        e.preventDefault();
+        if (authData === null) {
+            window.location.hash = 'home';
+        } else {
+            var champion = $('.champion').val();
+            var role = $('.role').val();
+            var title = $('.title').val();
+            var body = $('.body').val();
+            var count = idCount();
+            var user = authData['password'].email;
+            var newGuide = {
+                champion: champion,
+                role: role,
+                title: title,
+                body: body,
+                user: user,
+                id: count,
+                rating: null,
+                comments: null
+            };
+            guides.push(newGuide);
+        }
+    }
 });
 
-},{"react":159}],164:[function(require,module,exports){
+function idCount() {
+    var guideCount;
+    guides.on('value', function (snapshot) {
+        guideCount = snapshot.val();
+        console.log(snapshot.val());
+    }, function (errorObject) {
+        console.log('The read failed: ' + errorObject.code);
+    });
+    var i = 0;
+    var type = 'champion'; //until general guides are implemented
+    for (var key in guideCount) {
+        i++;
+    }
+    return type + i;
+}
+
+},{"jquery":4,"react":159}],164:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -32722,270 +33424,88 @@ module.exports = React.createClass({
 'use strict';
 
 var React = require('react');
+var $ = require('jquery');
+var ref = new Firebase('https://lolresource.firebaseio.com');
 
 module.exports = React.createClass({
     displayName: 'exports',
 
     render: function render() {
-        return React.createElement('section', null);
-    }
-});
-
-},{"react":159}],166:[function(require,module,exports){
-'use strict';
-
-var React = require('react');
-var Backbone = require('backbone');
-var $ = require('jquery');
-var Profile = require('./components/profilePage');
-var Home = require('./components/homePage');
-var Search = require('./components/searchPage');
-var Settings = require('./components/settingsPage');
-var Login = require('./components/loginPage');
-var Registration = require('./components/registrationPage');
-
-var ref = new Firebase('https://lolresource.firebaseio.com');
-var allChampions = new Firebase('https://lolresource.firebaseio.com/allchampions');
-var freeChampions = new Firebase('https://lolresource.firebaseio.com/freechamps');
-var freeChampionsByName = new Firebase('https://lolresource.firebaseio.com/freechampsbyname');
-
-$(document).on('ready', start);
-
-function start(e) {
-    //might need this for something
-
-    //
-    //initializes and starts router
-    var App = Backbone.Router.extend({
-        routes: {
-            'edit': 'home',
-            '': 'home',
-            'home': 'home',
-            'settings': 'settings',
-            'forums': 'forums',
-            'login': 'login',
-            'registration': 'registration'
-        },
-        profile: function profile() {
-            $('.page').hide();
-            $('#container').show();
-            React.render(React.createElement(Profile, null), document.querySelector('#container'));
-        },
-        home: function home() {
-            $('.page').hide();
-            $('#container').show();
-            React.render(React.createElement(Home, null), document.querySelector('#container'));
-        },
-        search: function search() {
-            $('.page').hide();
-            $('#container').show();
-            React.render(React.createElement(Search, null), document.querySelector('#container'));
-        },
-        login: function login() {
-            $('.page').hide();
-            $('#container').show();
-            React.render(React.createElement(Login, null), document.querySelector('#container'));
-        },
-        registration: function registration() {
-            React.render(React.createElement(Registration, null), document.querySelector('#container'));
-        },
-        settings: function settings() {
-            $('#container').hide();
-            $('.page').show();
-            React.render(React.createElement(Settings, null), document.querySelector('#container'));
-        }
-    });
-    var app = new App();
-    Backbone.history.start();
-
-    $('.logButton').click(logIn);
-    $('.userBox').keyup(logInPush);
-    $('.passBox').keyup(logInPush);
-    $('.signButton').click(signIn);
-    $('.firstName').keyup(signInPush);
-    $('.lastName').keyup(signInPush);
-    $('.email').keyup(signInPush);
-    $('.password').keyup(signInPush);
-    $('.username').keyup(signInPush);
-    // $('#closed').click(showClosed);
-    // $('#all').click(showAll);
-    // $('.commentButton').on('click', addComment)
-    //
-    //Log in and sign in functions
-    $('.signUpSuccess').hide();
-
-    var charPictures = {
-        Aatrox: '',
-        Ahri: '',
-        Akali: '',
-        Alistar: '',
-        Amumu: '',
-        Anivia: '',
-        Annie: '',
-        Ashe: '',
-        Azir: 'http://lolwp.com/wp-content/uploads/2014/08/Azir-wallpaper.jpg',
-        Bard: '',
-        Blitzcrank: '',
-        Brand: '',
-        Braum: '',
-        Caitlyn: '',
-        Cassiopeia: '',
-        ChoGath: '',
-        Corki: '',
-        Darius: '',
-        Diana: '',
-        DrMundo: 'http://lolwp.com/wp-content/uploads/Dr-Mundo-Original-Skin-Reworked.jpg',
-        Draven: '',
-        Ekko: '',
-        Elise: '',
-        Evelynn: '',
-        Ezreal: '',
-        FiddleSticks: 'http://lolwp.com/wp-content/uploads/Fiddlesticks_Splash_10.jpg',
-        Fiora: '',
-        Fizz: '',
-        Galio: '',
-        Gangplank: '',
-        Garen: '',
-        Gnar: '',
-        Gragas: 'http://lolwp.com/wp-content/uploads/Gragas_Splash_0.jpg',
-        Graves: '',
-        Hecarim: '',
-        Heimerdinger: '',
-        Irelia: '',
-        Janna: 'http://images7.alphacoders.com/327/327160.jpg',
-        JarvanIV: '',
-        Jax: '',
-        Jayce: '',
-        Jinx: '',
-        Kalista: '',
-        Karma: '',
-        Karthus: '',
-        Kassadin: '',
-        Katarina: '',
-        Kayle: '',
-        Kennen: '',
-        KhaZix: '',
-        KogMaw: '',
-        LeBlanc: '',
-        LeeSin: '',
-        Leona: '',
-        Lissandra: '',
-        Lucian: '',
-        Lulu: '',
-        Lux: '',
-        Malphite: '',
-        Malzahar: '',
-        Maokai: '',
-        MasterYi: '',
-        MissFortune: '',
-        Mordekaiser: '',
-        Morgana: '',
-        Nami: '',
-        Nasus: '',
-        Nautilus: '',
-        Nidalee: '',
-        Nocturne: '',
-        Nunu: '',
-        Olaf: '',
-        Orianna: '',
-        Pantheon: '',
-        Poppy: '',
-        Quinn: '',
-        Rammus: '',
-        RekSai: '',
-        Renekton: '',
-        Rengar: '',
-        Riven: '',
-        Rumble: '',
-        Ryze: 'http://lolwp.com/wp-content/uploads/Ryze_Splash_01.jpg',
-        Sejuani: '',
-        Shaco: '',
-        Shen: '',
-        Shyvana: '',
-        Singed: '',
-        Sion: '',
-        Sivir: '',
-        Skarner: '',
-        Sona: '',
-        Soraka: '',
-        Swain: '',
-        Syndra: '',
-        Talon: '',
-        Taric: '',
-        Teemo: '',
-        Thresh: 'http://lolwp.com/wp-content/uploads/Thresh-Classic.jpg',
-        Tristana: '',
-        Trundle: '',
-        Tryndamere: '',
-        TwistedFate: '',
-        Twitch: '',
-        Udyr: '',
-        Urgot: 'http://lolwp.com/wp-content/uploads/Urgot_splash.jpg',
-        Varus: 'http://lolwp.com/wp-content/uploads/Varus.jpg',
-        Vayne: '',
-        Veigar: '',
-        Velkoz: 'http://lolwp.com/wp-content/uploads/2014/02/VelKoz.jpg',
-        Vi: '',
-        Viktor: '',
-        Vladimir: '',
-        Volibear: '',
-        Warwick: '',
-        Wukong: '',
-        Xerath: '',
-        XinZhao: '',
-        Yasuo: '',
-        Yorick: '',
-        Zac: '',
-        Zec: '',
-        Ziggs: '',
-        Zilean: '',
-        Zyra: ''
-
-    };
-
-    function logIn(e) {
-        e.preventDefault();
-        console.log('??');
-        var username = $('.userBox').val();
-        var password = $('.passBox').val();
-        if (username === '' && password === '') {} else {
-            ref.authWithPassword({
-                email: username,
-                password: password
-            }, function (error, authData) {
-                if (error) {
-                    console.log('Login Failed!', error);
-                } else {
-                    console.log('Authenticated successfully with payload:', authData);
-                    window.location.hash = 'home';
-                }
-            });
-        }
-    };
-
-    function logInPush(e) {
-        e.preventDefault();
-        console.log('??');
-        var username = $('.userBox').val();
-        var password = $('.passBox').val();
-        if (event.keycode === 13) {
-            ref.authWithPassword({
-                email: username,
-                password: password
-            }, function (error, authData) {
-                if (error) {
-                    console.log('Login Failed!', error);
-                } else {
-                    console.log('Authenticated successfully with payload:', authData);
-                    window.location.hash = 'home';
-                }
-            }, function (error, authData) {
-                remember: 'sessionOnly';
-            });
-        }
-    };
-
-    function signIn(e) {
+        return React.createElement(
+            'section',
+            null,
+            React.createElement(
+                'div',
+                { className: 'login-signup' },
+                React.createElement(
+                    'form',
+                    { onSubmit: this.signIn },
+                    React.createElement(
+                        'h2',
+                        null,
+                        'Or Sign Up!'
+                    ),
+                    React.createElement('input', { type: 'text', className: 'firstName', placeholder: 'First Name' }),
+                    ' ',
+                    React.createElement(
+                        'span',
+                        { className: 'error firstError' },
+                        '*you must ender a valid name'
+                    ),
+                    React.createElement('br', null),
+                    React.createElement('input', { type: 'text', className: 'lastName', placeholder: 'Last Name' }),
+                    ' ',
+                    React.createElement(
+                        'span',
+                        { className: 'error lastError' },
+                        '*you must ender a valid name'
+                    ),
+                    React.createElement('br', null),
+                    React.createElement('input', { type: 'text', className: 'username', placeholder: 'Username' }),
+                    ' ',
+                    React.createElement(
+                        'span',
+                        { className: 'error signError' },
+                        '*you must ender a valid username'
+                    ),
+                    React.createElement('br', null),
+                    React.createElement('input', { type: 'text', className: 'email', placeholder: 'Email' }),
+                    ' ',
+                    React.createElement(
+                        'span',
+                        { className: 'error emailError' },
+                        '*you must ender a valid email'
+                    ),
+                    React.createElement('br', null),
+                    React.createElement('input', { type: 'password', className: 'password', placeholder: 'Password' }),
+                    ' ',
+                    React.createElement(
+                        'span',
+                        { className: 'error passError' },
+                        '*you must ender a valid password'
+                    ),
+                    React.createElement('br', null),
+                    React.createElement(
+                        'button',
+                        { className: 'signButton' },
+                        'Submit'
+                    )
+                )
+            ),
+            React.createElement(
+                'section',
+                { className: 'signUpSuccess' },
+                'You have succesfully signed up! Click ',
+                React.createElement(
+                    'a',
+                    { className: 'regLink', href: '#login' },
+                    'here'
+                ),
+                ' to log in!'
+            )
+        );
+    },
+    signIn: function signIn(e) {
         e.preventDefault();
         var firstName = $('.firstName').val();
         var lastName = $('.lastName').val();
@@ -33063,145 +33583,413 @@ function start(e) {
             $('.login-signup').hide();
             $('.signUpSuccess').show();
         }
-    };
+    }
+});
 
-    function signInPush(e) {
-        e.preventDefault();
-        var newUser = {};
-        var firstName = $('.firstName').val();
-        var lastName = $('.lastName').val();
-        var email = $('.email').val();
-        var password = $('.password').val();
-        var username = $('.username').val();
-        var f = false;
-        var l = false;
-        var p = false;
-        var u = false;
-        if (event.keycode === 13) {
-            if (firstName === '') {
-                $('.firstError').show();
-            } else {
-                $('.firstError').hide();
-                f = true;
-            }
-            if (lastName === '') {
-                $('.lastError').show();
-            } else {
-                $('.lastError').hide();
-                l = true;
-            }
-            if (password === '') {
-                $('.passError').show();
-            } else {
-                $('.passError').hide();
-                p = true;
-            }
-            if (username === '') {
-                $('.signError').show();
-                u = false;
-            } else {
-                $('.signError').hide();
-                u = true;
-            }
-            var atSym = false;
-            var eDotCom = false;
-            if ('@' in email.split('')) {
-                atSym = true;
-            }
-            if (atSym === false) {
-                $('.emailError').show();
-            } else {
-                $('.emailError').hide();
-            }
-            if (email.substring(email.length - 4) === '.com') {
-                eDotCom = true;
-            }
-            if (eDotCom === false) {
-                $('.emailError').show();
-            } else {
-                $('.emailError').hide();
-            }
-            console.log(atSym);
-            console.log(eDotCom);
-            console.log(p);
-            console.log(f);
-            console.log(l);
-            console.log(u);
-            if (atSym && eDotCom && p && f && l && u) {
-                ref.createUser({
-                    email: email,
-                    password: password,
-                    firstName: firstName,
-                    lastName: lastName,
-                    username: username
-                }, function (error, userData) {
-                    if (error) {
-                        console.log('Error creating user:', error);
-                    } else {
-                        console.log('Successfully created user account with uid:', userData.uid);
-                    }
-                });
-                $('#container').show();
-                $('.login-signup').hide();
-                $('.signUpSuccess').show();
-            }
+function signInPush(e) {
+    e.preventDefault();
+    var newUser = {};
+    var firstName = $('.firstName').val();
+    var lastName = $('.lastName').val();
+    var email = $('.email').val();
+    var password = $('.password').val();
+    var username = $('.username').val();
+    var f = false;
+    var l = false;
+    var p = false;
+    var u = false;
+    if (event.keycode === 13) {
+        if (firstName === '') {
+            $('.firstError').show();
+        } else {
+            $('.firstError').hide();
+            f = true;
         }
-    };
-    function getAllChamps() {
-        $.get('https://na.api.pvp.net/api/lol/na/v1.2/champion?api_key=b2e96d04-1205-4644-967c-ae0fdd0690a5', storeChamps, 'json');
-    }
-    function storeChamps(val) {
-        allChampions.remove();
-        allChampions.set(val.champions);
-    }
-    function getTopChamps() {}
-    function everyHour() {
-        setInterval(getAllChamps, 1000 * 60 * 60);
-    }
-    function getByChampID(val) {}
-    function freeChamps() {
-        freeChampions.remove();
-        allChampions.on('value', function (snapshot) {
-            var champs = snapshot.val();
-            console.log(champs.length);
-            for (var i = 0; i < champs.length; i++) {
-                if (champs[i].freeToPlay === true) {
-                    freeChampions.push(champs[i]);
+        if (lastName === '') {
+            $('.lastError').show();
+        } else {
+            $('.lastError').hide();
+            l = true;
+        }
+        if (password === '') {
+            $('.passError').show();
+        } else {
+            $('.passError').hide();
+            p = true;
+        }
+        if (username === '') {
+            $('.signError').show();
+            u = false;
+        } else {
+            $('.signError').hide();
+            u = true;
+        }
+        var atSym = false;
+        var eDotCom = false;
+        if ('@' in email.split('')) {
+            atSym = true;
+        }
+        if (atSym === false) {
+            $('.emailError').show();
+        } else {
+            $('.emailError').hide();
+        }
+        if (email.substring(email.length - 4) === '.com') {
+            eDotCom = true;
+        }
+        if (eDotCom === false) {
+            $('.emailError').show();
+        } else {
+            $('.emailError').hide();
+        }
+        if (atSym && eDotCom && p && f && l && u) {
+            ref.createUser({
+                email: email,
+                password: password,
+                firstName: firstName,
+                lastName: lastName,
+                username: username
+            }, function (error, userData) {
+                if (error) {
+                    console.log('Error creating user:', error);
+                } else {
+                    console.log('Successfully created user account with uid:', userData.uid);
                 }
-            }
-        });
+            });
+            $('#container').show();
+            $('.login-signup').hide();
+            $('.signUpSuccess').show();
+        }
     }
-    function freeChampNames() {
-        freeChampionsByName.remove();
-        freeChampions.on('value', function (snapshot) {
-            var free = snapshot.val();
-            for (var key in free) {
-                console.log(free[key].id);
-                $.get('https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion/' + free[key].id + '?champData=image&api_key=b2e96d04-1205-4644-967c-ae0fdd0690a5', storeFreeChampsByName, 'json');
-            }
-        });
-    }
-    function storeFreeChampsByName(val) {
-        console.log(val);
-        freeChampionsByName.push(val);
-    }
-    function renderFreeChamps() {
-        $('.freeChamps').val('');
-        var i = 1;
-        freeChampionsByName.on('value', function (snapshot) {
-            var named = snapshot.val();
-            for (var key in named) {
-                var ch = named[key].key;
-                $('.freeChamps').append('<div class = \'free\' id = \'' + i + '\'>' + '<span class = \'freeText\'>' + named[key].name + '</span>' + '<br>' + '<div class = \'title\'>' + '<span class = \'freeText\'>' + named[key].title + '</span>' + '</div>' + '</div>');
-                $('#' + i).css('background-image', 'url(' + charPictures[ch] + ')');
-                i++;
-            }
-        });
-    }
-    renderFreeChamps();
+};
+
+},{"jquery":4,"react":159}],166:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+var guides = new Firebase('https://lolresource.firebaseio.com/guides');
+
+module.exports = React.createClass({
+				displayName: 'exports',
+
+				render: function render() {
+								return React.createElement(
+												'section',
+												null,
+												React.createElement(
+																'form',
+																{ onSubmit: this.returnGuides, className: 'searchForm' },
+																React.createElement('input', { type: 'text', className: 'searchText' }),
+																React.createElement(
+																				'button',
+																				null,
+																				'Submit'
+																)
+												)
+								);
+				},
+				returnGuides: function returnGuides() {}
+
+});
+
+function searchGuides() {
+				var results = [];
+				var searchVal = $('.searchText').val();
+				searchVal = searchVal.split(' ');
+				for (var i = 0; i < searchVal.length(); i++) {
+								guides.on('value', function (snapshot) {
+												guideCount = snapshot.val();
+												console.log(snapshot.val());
+								}, function (errorObject) {
+												console.log('The read failed: ' + errorObject.code);
+								});
+								for (var key in guideCount) {
+												if (searchVal[i] === searchGuide[key].name || searchVal[i] === searchGuide[key].name) {
+																var count = 'guide' + i;
+																results.append(searchGuide[key]);
+												}
+								}
+				}
+				return results;
 }
 
-},{"./components/homePage":160,"./components/loginPage":161,"./components/profilePage":162,"./components/registrationPage":163,"./components/searchPage":164,"./components/settingsPage":165,"backbone":1,"jquery":4,"react":159}]},{},[166])
+},{"react":159}],167:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+
+module.exports = React.createClass({
+    displayName: 'exports',
+
+    render: function render() {
+        return React.createElement('section', null);
+    }
+});
+
+},{"react":159}],168:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+var Backbone = require('backbone');
+var $ = require('jquery');
+var Profile = require('./components/profilePage');
+var Home = require('./components/homePage');
+var Search = require('./components/searchPage');
+var Settings = require('./components/settingsPage');
+var Login = require('./components/loginPage');
+var Registration = require('./components/registrationPage');
+var Post = require('./components/post');
+var Logout = require('./components/logout');
+
+var ref = new Firebase('https://lolresource.firebaseio.com');
+var allChampions = new Firebase('https://lolresource.firebaseio.com/allchampions');
+var freeChampions = new Firebase('https://lolresource.firebaseio.com/freechamps');
+var freeChampionsByName = new Firebase('https://lolresource.firebaseio.com/freechampsbyname');
+var authData = ref.getAuth();
+
+$(document).on('ready', start);
+
+function start(e) {
+	//
+	//initializes and starts router
+	var routerConfig = {
+		routes: {
+			// 'edit': 'home',
+			'': 'home',
+			'home': 'home',
+			'settings': 'settings',
+			'forums': 'forums',
+			'login': 'login',
+			'registration': 'registration',
+			'profile': 'profile',
+			'search': 'search',
+			'post': 'post'
+		},
+		profile: function profile() {
+			logArea();
+			React.render(React.createElement(Profile, null), document.querySelector('#container'));
+		},
+		home: function home() {
+			logArea();
+			React.render(React.createElement(Home, null), document.querySelector('#container'));
+		},
+		search: function search() {
+			logArea();
+			React.render(React.createElement(Search, null), document.querySelector('#container'));
+		},
+		login: function login() {
+			logArea();
+			React.render(React.createElement(Login, null), document.querySelector('#container'));
+		},
+		registration: function registration() {
+			logArea();
+			React.render(React.createElement(Registration, null), document.querySelector('#container'));
+		},
+		settings: function settings() {
+			logArea();
+			React.render(React.createElement(Settings, null), document.querySelector('#container'));
+		},
+		post: function post() {
+			logArea();
+			React.render(React.createElement(Post, null), document.querySelector('#container'));
+		}
+	};
+	var app = Backbone.Router.extend(routerConfig);
+	var myRouter = new app();
+	Backbone.history.start();
+
+	function getAllChamps() {
+		$.get('https://na.api.pvp.net/api/lol/na/v1.2/champion?api_key=b2e96d04-1205-4644-967c-ae0fdd0690a5', storeChamps, 'json');
+	}
+	function storeChamps(val) {
+		allChampions.remove();
+		allChampions.set(val.champions);
+	}
+	function getTopChamps() {}
+	function everyHour() {
+		setInterval(getAllChamps, 1000 * 60 * 60);
+	}
+	function getByChampID(val) {}
+	function freeChamps() {
+		freeChampions.remove();
+		allChampions.on('value', function (snapshot) {
+			var champs = snapshot.val();
+			console.log(champs.length);
+			for (var i = 0; i < champs.length; i++) {
+				if (champs[i].freeToPlay === true) {
+					freeChampions.push(champs[i]);
+				}
+			}
+		});
+	}
+	function freeChampNames() {
+		freeChampionsByName.remove();
+		freeChampions.on('value', function (snapshot) {
+			var free = snapshot.val();
+			for (var key in free) {
+				console.log(free[key].id);
+				$.get('https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion/' + free[key].id + '?champData=image&api_key=b2e96d04-1205-4644-967c-ae0fdd0690a5', storeFreeChampsByName, 'json');
+			}
+		});
+	}
+	function storeFreeChampsByName(val) {
+		console.log(val);
+		freeChampionsByName.push(val);
+	}
+	function renderFreeChamps() {
+		$('.freeChamps').val('');
+		var i = 1;
+		freeChampionsByName.on('value', function (snapshot) {
+			var named = snapshot.val();
+			for (var key in named) {
+				var ch = named[key].key;
+				$('.freeChamps').append('<div class = \'free\' id = \'' + i + '\'>' + '<span class = \'freeText\'>' + named[key].name + '</span>' + '<br>' + '<div class = \'title\'>' + '<span class = \'freeText\'>' + named[key].title + '</span>' + '</div>' + '</div>');
+				$('#' + i).css('background-image', 'url(' + charPictures[ch] + ')');
+				i++;
+			}
+		});
+	}
+	renderFreeChamps();
+	var charPictures = {
+		Aatrox: '',
+		Ahri: '',
+		Akali: '',
+		Alistar: '',
+		Amumu: '',
+		Anivia: '',
+		Annie: '',
+		Ashe: '',
+		Azir: 'http://lolwp.com/wp-content/uploads/2014/08/Azir-wallpaper.jpg',
+		Bard: '',
+		Blitzcrank: '',
+		Brand: '',
+		Braum: '',
+		Caitlyn: '',
+		Cassiopeia: '',
+		ChoGath: '',
+		Corki: '',
+		Darius: '',
+		Diana: '',
+		DrMundo: 'http://lolwp.com/wp-content/uploads/Dr-Mundo-Original-Skin-Reworked.jpg',
+		Draven: '',
+		Ekko: '',
+		Elise: '',
+		Evelynn: '',
+		Ezreal: '',
+		FiddleSticks: 'http://lolwp.com/wp-content/uploads/Fiddlesticks_Splash_10.jpg',
+		Fiora: '',
+		Fizz: '',
+		Galio: '',
+		Gangplank: '',
+		Garen: '',
+		Gnar: '',
+		Gragas: 'http://lolwp.com/wp-content/uploads/Gragas_Splash_0.jpg',
+		Graves: '',
+		Hecarim: '',
+		Heimerdinger: '',
+		Irelia: '',
+		Janna: 'http://images7.alphacoders.com/327/327160.jpg',
+		JarvanIV: '',
+		Jax: '',
+		Jayce: '',
+		Jinx: '',
+		Kalista: '',
+		Karma: '',
+		Karthus: '',
+		Kassadin: '',
+		Katarina: '',
+		Kayle: '',
+		Kennen: '',
+		KhaZix: '',
+		KogMaw: '',
+		LeBlanc: '',
+		LeeSin: '',
+		Leona: '',
+		Lissandra: '',
+		Lucian: '',
+		Lulu: '',
+		Lux: '',
+		Malphite: '',
+		Malzahar: '',
+		Maokai: '',
+		MasterYi: '',
+		MissFortune: '',
+		Mordekaiser: '',
+		Morgana: '',
+		Nami: '',
+		Nasus: '',
+		Nautilus: '',
+		Nidalee: '',
+		Nocturne: '',
+		Nunu: '',
+		Olaf: '',
+		Orianna: '',
+		Pantheon: '',
+		Poppy: '',
+		Quinn: '',
+		Rammus: '',
+		RekSai: '',
+		Renekton: '',
+		Rengar: '',
+		Riven: '',
+		Rumble: '',
+		Ryze: 'http://lolwp.com/wp-content/uploads/Ryze_Splash_01.jpg',
+		Sejuani: '',
+		Shaco: '',
+		Shen: '',
+		Shyvana: '',
+		Singed: '',
+		Sion: '',
+		Sivir: '',
+		Skarner: '',
+		Sona: '',
+		Soraka: '',
+		Swain: '',
+		Syndra: '',
+		Talon: '',
+		Taric: '',
+		Teemo: '',
+		Thresh: 'http://lolwp.com/wp-content/uploads/Thresh-Classic.jpg',
+		Tristana: '',
+		Trundle: '',
+		Tryndamere: '',
+		TwistedFate: '',
+		Twitch: '',
+		Udyr: '',
+		Urgot: 'http://lolwp.com/wp-content/uploads/Urgot_splash.jpg',
+		Varus: 'http://lolwp.com/wp-content/uploads/Varus.jpg',
+		Vayne: '',
+		Veigar: '',
+		Velkoz: 'http://lolwp.com/wp-content/uploads/2014/02/VelKoz.jpg',
+		Vi: '',
+		Viktor: '',
+		Vladimir: '',
+		Volibear: '',
+		Warwick: '',
+		Wukong: '',
+		Xerath: '',
+		XinZhao: '',
+		Yasuo: '',
+		Yorick: '',
+		Zac: '',
+		Zed: '',
+		Ziggs: '',
+		Zilean: '',
+		Zyra: ''
+	};
+	function logArea() {
+		if (authData === null) {
+			$('.loginLink').show();
+			$('.logout').hide();
+		} else {
+			$('.loginLink').hide();
+			$('.logout').show();
+			React.render(React.createElement(Logout, null), document.querySelector('.logoutCon'));
+		}
+	}
+}
+
+},{"./components/homePage":160,"./components/loginPage":161,"./components/logout":162,"./components/post":163,"./components/profilePage":164,"./components/registrationPage":165,"./components/searchPage":166,"./components/settingsPage":167,"backbone":1,"jquery":4,"react":159}]},{},[168])
 
 
 //# sourceMappingURL=all.js.map

@@ -7,7 +7,8 @@ module.exports = Backbone.Model.extend({
 		user: null,
 		text: null,
 		score: null,
-		comments: null
+		comments: null,
+		champion: null
 	},
 	validate: function(attr) {
 		
