@@ -33576,8 +33576,6 @@ module.exports = React.createClass({
                 } else {
                     console.log('Successfully created user account with uid:', userData.uid);
                 }
-            }, function (error, authData) {
-                remember: 'sessionOnly';
             });
             $('#container').show();
             $('.login-signup').hide();
@@ -33586,88 +33584,12 @@ module.exports = React.createClass({
     }
 });
 
-function signInPush(e) {
-    e.preventDefault();
-    var newUser = {};
-    var firstName = $('.firstName').val();
-    var lastName = $('.lastName').val();
-    var email = $('.email').val();
-    var password = $('.password').val();
-    var username = $('.username').val();
-    var f = false;
-    var l = false;
-    var p = false;
-    var u = false;
-    if (event.keycode === 13) {
-        if (firstName === '') {
-            $('.firstError').show();
-        } else {
-            $('.firstError').hide();
-            f = true;
-        }
-        if (lastName === '') {
-            $('.lastError').show();
-        } else {
-            $('.lastError').hide();
-            l = true;
-        }
-        if (password === '') {
-            $('.passError').show();
-        } else {
-            $('.passError').hide();
-            p = true;
-        }
-        if (username === '') {
-            $('.signError').show();
-            u = false;
-        } else {
-            $('.signError').hide();
-            u = true;
-        }
-        var atSym = false;
-        var eDotCom = false;
-        if ('@' in email.split('')) {
-            atSym = true;
-        }
-        if (atSym === false) {
-            $('.emailError').show();
-        } else {
-            $('.emailError').hide();
-        }
-        if (email.substring(email.length - 4) === '.com') {
-            eDotCom = true;
-        }
-        if (eDotCom === false) {
-            $('.emailError').show();
-        } else {
-            $('.emailError').hide();
-        }
-        if (atSym && eDotCom && p && f && l && u) {
-            ref.createUser({
-                email: email,
-                password: password,
-                firstName: firstName,
-                lastName: lastName,
-                username: username
-            }, function (error, userData) {
-                if (error) {
-                    console.log('Error creating user:', error);
-                } else {
-                    console.log('Successfully created user account with uid:', userData.uid);
-                }
-            });
-            $('#container').show();
-            $('.login-signup').hide();
-            $('.signUpSuccess').show();
-        }
-    }
-};
-
 },{"jquery":4,"react":159}],166:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
 var guides = new Firebase('https://lolresource.firebaseio.com/guides');
+var $ = require('jquery');
 
 module.exports = React.createClass({
 				displayName: 'exports',
@@ -33685,35 +33607,45 @@ module.exports = React.createClass({
 																				null,
 																				'Submit'
 																)
-												)
+												),
+												React.createElement('div', { className: 'searchResults' })
 								);
 				},
-				returnGuides: function returnGuides() {}
-
-});
-
-function searchGuides() {
-				var results = [];
-				var searchVal = $('.searchText').val();
-				searchVal = searchVal.split(' ');
-				for (var i = 0; i < searchVal.length(); i++) {
-								guides.on('value', function (snapshot) {
-												guideCount = snapshot.val();
-												console.log(snapshot.val());
-								}, function (errorObject) {
-												console.log('The read failed: ' + errorObject.code);
-								});
-								for (var key in guideCount) {
-												if (searchVal[i] === searchGuide[key].name || searchVal[i] === searchGuide[key].name) {
-																var count = 'guide' + i;
-																results.append(searchGuide[key]);
-												}
+				returnGuides: function returnGuides() {
+								var Val = '';
+								var guideCount;
+								var result = [];
+								var searchVal = $('.searchText').val();
+								$('.searchResults').html('');
+								searchVal = searchVal.split(' ');
+								for (var i = 0; i < searchVal.length; i++) {
+												var searched = searchVal[i];
+												guides.on('value', function (snapshot) {
+																guideCount = snapshot.val();
+																for (var key in guideCount) {
+																				console.log(guideCount[key].champion);
+																				console.log(guideCount[key].role);
+																				if (searched === guideCount[key].champion || searched === guideCount[key].role) {
+																								console.log(guideCount[key]);
+																								result.push(guideCount[key]);
+																								console.log(result);
+																				}
+																}
+																if (result.length === 0) {
+																				Val = 'No results were found';
+																} else {
+																				for (var i = 0; i < result.length; i++) {
+																								$('.searchResults').append('<div className = \'searchChamp\'>' + result[i].champion + '</div><div className = \'searchRole\'>' + result[i].role + '<div className = \'searchTitle>' + result[i].title + '</div><div className = \'searchRating\'>' + result[i] + '</div>');
+																				}
+																}
+												}, function (errorObject) {
+																console.log('The read failed: ' + errorObject.code);
+												});
 								}
 				}
-				return results;
-}
+});
 
-},{"react":159}],167:[function(require,module,exports){
+},{"jquery":4,"react":159}],167:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -33809,7 +33741,6 @@ function start(e) {
 	function everyHour() {
 		setInterval(getAllChamps, 1000 * 60 * 60);
 	}
-	function getByChampID(val) {}
 	function freeChamps() {
 		freeChampions.remove();
 		allChampions.on('value', function (snapshot) {
@@ -33849,6 +33780,7 @@ function start(e) {
 			}
 		});
 	}
+
 	renderFreeChamps();
 	var charPictures = {
 		Aatrox: '',

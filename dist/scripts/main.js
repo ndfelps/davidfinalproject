@@ -85,9 +85,6 @@ function start(e) {
     function everyHour() {
     	setInterval(getAllChamps, 1000*60*60)
     }
-    function getByChampID(val) {
-
-    }
     function freeChamps() {
     	freeChampions.remove();
     	allChampions.on("value", function(snapshot) {
@@ -131,7 +128,9 @@ function start(e) {
     		}
      	})
     }
-    renderFreeChamps();
+
+
+	renderFreeChamps();
   var charPictures = {
 		Aatrox: '',
 		Ahri: '',
