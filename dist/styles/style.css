@@ -116,4 +116,18 @@ a {
 	height: 100px;
 	width: 70%;
 }
-
+.footer {
+	background-color: black;
+	text-align: center;
+	color: white;
+	float: left;
+	width: 100%;
+}
+.disclaimer {
+	font-size: 8px;
+	width: 200px;
+}
+.main {
+	margin: 0px;
+	padding: 0px;
+}
