@@ -8,7 +8,7 @@ module.exports = React.createClass ({
         	<section>
         		<div className="login-signup">
 					<form onSubmit={this.signIn}>
-						<h2>Or Sign Up!</h2>
+						<h2>Sign Up!</h2>
 						<input type = "text" className = "firstName" placeholder = "First Name" /> <span className = "error firstError">*you must ender a valid name</span><br />
 						<input type = "text" className = "lastName" placeholder = "Last Name" /> <span className = "error lastError">*you must ender a valid name</span><br />
 						<input type = "text" className = "username" placeholder = "Username" /> <span className = "error signError">*you must ender a valid username</span><br />

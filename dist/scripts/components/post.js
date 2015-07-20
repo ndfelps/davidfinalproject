@@ -114,7 +114,7 @@ module.exports = React.createClass ({
                             <option value='Tristana'>Tristana</option>
                             <option value='Trundle'>Trundle</option>
                             <option value='Tryndamere'>Tryndamere</option>
-                            <option value='Twisted Fate'></option>
+                            <option value='TwistedFate'></option>
                             <option value='Twitch'>Twitch</option>
                             <option value='Udyr'>Udyr</option>
                             <option value='Urgot'>Urgot</option>
@@ -129,7 +129,7 @@ module.exports = React.createClass ({
                             <option value='Warwick'>Warwick</option>
                             <option value='Wukong'>Wukong</option>
                             <option value='Xerath'>Xerath</option>
-                            <option value='Xin Zhao'>Xin Zhao</option>
+                            <option value='XinZhao'>Xin Zhao</option>
                             <option value='Yasuo'>Yasuo</option>
                             <option value='Yorick'>Yorick</option>
                             <option value='Zac'>Zac</option>
@@ -140,11 +140,11 @@ module.exports = React.createClass ({
                         </select> <br/>
                         Choose your role... <br/>
                         <select name = 'select' className = 'role'>
-                            <option value = 'top'>Top</option>
-                            <option value = 'jungle'>Jungle</option>
-                            <option value = 'mid'>Mid</option>
-                            <option value = 'dps'>DPS</option>
-                            <option value = 'support'>Support</option>
+                            <option value = 'Top'>Top</option>
+                            <option value = 'Jungle'>Jungle</option>
+                            <option value = 'Mid'>Mid</option>
+                            <option value = 'Dps'>DPS</option>
+                            <option value = 'Support'>Support</option>
                         </select><br/>
                     </div>
                     Title: <br/>
@@ -158,8 +158,9 @@ module.exports = React.createClass ({
     },
     postGuide: function(e) {
         e.preventDefault();
+        console.log('???');
         if(authData === null) {
-            window.location.hash = 'home';
+            window.location.hash = 'login';
         } else {
             var champion = $('.champion').val();
             var role = $('.role').val();
@@ -174,7 +175,7 @@ module.exports = React.createClass ({
                 body: body,
                 user: user,
                 id: count,
-                rating: null,
+                rating: 0,
                 comments: null
             }
             guides.push(newGuide);
@@ -196,4 +197,4 @@ function idCount() {
         i++;
     }
     return type+i;
-    }
+}

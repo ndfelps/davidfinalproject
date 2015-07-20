@@ -9,6 +9,7 @@ var Login = require('./components/loginPage');
 var Registration = require('./components/registrationPage');
 var Post = require('./components/post');
 var Logout = require('./components/logout');
+var Guide = require('./components/uGuidepage');
 
 
 var ref = new Firebase("https://lolresource.firebaseio.com");
@@ -33,7 +34,8 @@ function start(e) {
             'registration': 'registration',
             'profile': 'profile',
             'search': 'search',
-            'post': 'post'
+            'post': 'post',
+            'guide/:id': 'guide'
         },
         profile: function() {
         	logArea();
@@ -61,7 +63,11 @@ function start(e) {
         },
         post: function() {
         	logArea();
-        	React.render(<Post/>, document.querySelector('#container'))
+        	React.render(<Post/>, document.querySelector('#container'));
+        },
+        guide: function() {
+        	logArea();
+        	React.render(<Guide/>, document.querySelector('#container'));
         }
     };
     var app = Backbone.Router.extend(routerConfig);
