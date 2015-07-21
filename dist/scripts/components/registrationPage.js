@@ -1,6 +1,7 @@
 var React = require('react');
 var $ = require('jquery');
 var ref = new Firebase("https://lolresource.firebaseio.com");
+var users = new Firebase("https://lolresource.firebaseio.com/users")
 
 module.exports = React.createClass ({
     render: function() {
@@ -82,6 +83,14 @@ module.exports = React.createClass ({
         }
         atSym = true;
         if(atSym && eDotCom && p && f && l) {
+            var newUser = {
+                email: email,
+                password: password,
+                firstName: firstName,
+                lastName: lastName,
+                username: username
+            };
+            users.push(newUser);
             ref.createUser({
 				  email    : email,
 				  password : password,

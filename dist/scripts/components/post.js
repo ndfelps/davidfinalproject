@@ -18,7 +18,6 @@ module.exports = React.createClass ({
                             <option value='Akali'>Akali</option>
                             <option value='Alistar'>Alistar</option>
                             <option value='Anivia'>Anivia</option>
-                            <option value='Anivia'>Anivia</option>
                             <option value='Annie'>Annie</option>
                             <option value='Ashe'>Ashe</option>
                             <option value='Azir'>Azir</option>
@@ -148,9 +147,9 @@ module.exports = React.createClass ({
                         </select><br/>
                     </div>
                     Title: <br/>
-                    <input className = "title" type = "text" /><br/>
+                    <input type = 'text' className = 'guideName' /><br/>
                     Body:<br/>
-                    <input className = "body" type = "text" /><br/>
+                    <textarea wrap = 'on' rows = '4' cols = '50' className = "body" type = "text"></textarea><br/>
                     <button className = "signButton">Submit</button>
                 </form>
         	</section>
@@ -158,43 +157,42 @@ module.exports = React.createClass ({
     },
     postGuide: function(e) {
         e.preventDefault();
-        console.log('???');
         if(authData === null) {
             window.location.hash = 'login';
         } else {
+            console.log($('.guideName').val());
             var champion = $('.champion').val();
             var role = $('.role').val();
-            var title = $('.title').val();
+            var guideName = $('.guideName').val();
             var body = $('.body').val();
-            var count = idCount();
+            var count = 1;
+            guides.on("value", function(snapshot) {
+                var guideCount = snapshot.val();
+                var type = 'champion'; //until general guides are implemented
+                for (var key in guideCount) {
+                    count++;
+                }
+            }, function (errorObject) {
+                console.log("The read failed: " + errorObject.code);
+            });
             var user = authData["password"].email;
             var newGuide = {
                 champion: champion,
                 role: role,
-                title: title,
+                title: guideName,
                 body: body,
                 user: user,
-                id: count,
+                id: 'champion' + count,
                 rating: 0,
                 comments: null
             }
             guides.push(newGuide);
+            window.location.hash = 'home';
         }
     }
 });
 
-function idCount() {
-    var guideCount;
-    guides.on("value", function(snapshot) {
-        guideCount = snapshot.val();
-        console.log(snapshot.val());
-    }, function (errorObject) {
-        console.log("The read failed: " + errorObject.code);
-    });
-    var i = 0;
-    var type = 'champion'; //until general guides are implemented
-    for (var key in guideCount) {
-        i++;
-    }
-    return type+i;
-}
+
+
+
+

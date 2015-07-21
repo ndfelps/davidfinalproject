@@ -1,3 +1,7 @@
+@-ms-viewport {
+  width: device-width;
+}
+
 html {
 	height: 100%;
 	font-family: sans-serif;
@@ -21,6 +25,7 @@ header {
 	float: left;
 	height: 121%;
 	margin-right: 10px;
+	overflow: hidden;
 }
 .topNav {
 	background-color: transparent;
@@ -66,7 +71,7 @@ a {
 	padding-top: 20px;
 	width: 90px;
 	margin-right: 0px;
-	margin-left: 46%;
+	margin-left: 45%;
 }
 .logo {
 	background-image: url(http://orig12.deviantart.net/00f5/f/2012/178/8/0/league_of_legends_v3_by_polishxcii-d554d4f.png) !important;
@@ -140,7 +145,7 @@ a {
 .disclaimer {
 	font-size: 8px;
 	width: 200px;
-	margin-left: 30%;
+	margin-left: 33%;
 }
 .main {
 	margin: 0px;
@@ -238,3 +243,38 @@ a {
 	margin-left: 30px;
 	line-height: 25px;
 }
+.homeGuide {
+	display: inline-block;
+	border-style: solid;
+	border-width: 1px;
+	border-color: black;
+	background-color: darkgrey;
+	width: 23%;
+	margin: 5px;
+	overflow: hidden;
+	height: 175px;
+}
+.body {
+	width: 500px;
+	height: 250px;
+}
+
+
+
+@media (max-width: 680px) {
+	#side {
+		display: none;
+	}
+	.topNav {
+		width: 32%;
+		font-size: 12px;
+	}
+	.logoCon {
+		margin-left: 40%;
+	}
+}
+
+
+
+
+

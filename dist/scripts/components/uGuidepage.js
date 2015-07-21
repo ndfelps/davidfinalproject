@@ -52,24 +52,24 @@ loadComments();
 module.exports = React.createClass ({
     render: function() {
         return(
-        	<section className = 'renderedGuide'>
+            <section className = 'renderedGuide'>
                 <div className = "voteButton">
                     <div onClick = {this.voteUp} className = "vote up"></div>
                     <div onClick = {this.voteDown} className = "vote down"></div>
                     <div className = "count"></div>
                 </div>
                 <div>
-            		<h2 className = 'guideTitle'>
-            		</h2>
+                    <h2 className = 'guideTitle'>
+                    </h2>
                     <div className = 'guideUser'>
                     </div>
                 </div>
-        		<div className = 'champLogo'>
-        		</div>
+                <div className = 'champLogo'>
+                </div>
                 <div className = 'guideRole'>
                 </div>
-        		<div className = 'guideBody'>
-        		</div>
+                <div className = 'guideBody'>
+                </div>
 
                 <form onSubmit = {this.postComment} className = 'commentForm'>
                     <input type = 'text' className = 'commentText' />
@@ -78,7 +78,7 @@ module.exports = React.createClass ({
                 <div className = 'commentSection'>
                 </div>
 
-        	</section>
+            </section>
         );
     },
     postComment: function(e) {
