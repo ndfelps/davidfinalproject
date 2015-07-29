@@ -33,3 +33,5 @@ Riot currently allows me only 10 requests every 10 seconds, up to 500 requests e
 ## Other Information on this Project
 
 https://trello.com/b/W6RJTsEG/david-felps-tiy-final-project
+
+https://lolresource.firebaseapp.com/?#home
