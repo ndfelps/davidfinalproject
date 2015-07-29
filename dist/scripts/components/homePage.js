@@ -13,21 +13,22 @@ module.exports = React.createClass ({
         		<div>
         			<h2 className = 'homeTitles'>Featured Guides</h2>
                     <div className = 'homeGuide firstGuide'>
-                        <a href = "#guide/champion7">
-                            <img className = 'searchChamp' src = 'http://img3.wikia.nocookie.net/__cb20150402220906/leagueoflegends/images/4/46/RivenSquare.png' />
-                            <div className = 'homeTitle'>
-                                How to not be awful as Riven
-                            </div>
-                            <div className = 'searchUser'>
-                                by ndfelps
-                            </div>
-
+                        <a href = "#guide/champion10">
+                            <img className = 'searchChamp homeChamp' src = 'http://img3.wikia.nocookie.net/__cb20150402220906/leagueoflegends/images/4/46/RivenSquare.png' />
+                            <span>
+                                <div className = 'homeTitle'>
+                                    Faceroll Riven
+                                </div>
+                                <div className = 'searchUser'>
+                                    by ndfelps
+                                </div>
+                            </span>
                         </a>
 
                     </div>
                     <div className = 'homeGuide'>
                         <a href = "#guide/champion0">
-                            <img className = 'searchChamp' src = 'http://img1.wikia.nocookie.net/__cb20150402215200/leagueoflegends/images/c/cc/AatroxSquare.png'/>
+                            <img className = 'searchChamp homeChamp' src = 'http://img1.wikia.nocookie.net/__cb20150402215200/leagueoflegends/images/c/cc/AatroxSquare.png'/>
                             <div className = 'homeTitle'>
                                 Aatrox: don't lose maybe
                             </div>
@@ -39,7 +40,7 @@ module.exports = React.createClass ({
                     </div>
                     <div className = 'homeGuide'>
                         <a href = "#guide/champion4">
-                            <img className = 'searchChamp' src = 'http://img4.wikia.nocookie.net/__cb20150402220409/leagueoflegends/images/e/ed/KogMawSquare.png'/>
+                            <img className = 'searchChamp homeChamp' src = 'http://img4.wikia.nocookie.net/__cb20150402220409/leagueoflegends/images/e/ed/KogMawSquare.png'/>
                             <div className = 'homeTitle'>
                                 Pew Pew, Kog'Maw
                             </div>
@@ -152,6 +153,7 @@ var icons = {
     Soraka: 'http://img4.wikia.nocookie.net/__cb20150402221143/leagueoflegends/images/8/8d/SorakaSquare.png',
     Swain: 'http://img2.wikia.nocookie.net/__cb20150402221211/leagueoflegends/images/8/8c/SwainSquare.png',
     Syndra: 'http://img4.wikia.nocookie.net/__cb20150402221209/leagueoflegends/images/6/65/SyndraSquare.png',
+    TahmKench: 'http://static-img.kassad.in/champion/TahmKench.png',
     Talon: 'http://img1.wikia.nocookie.net/__cb20150402221208/leagueoflegends/images/f/f9/TalonSquare.png',
     Taric: 'http://img1.wikia.nocookie.net/__cb20150402221207/leagueoflegends/images/c/c4/TaricSquare.png',
     Teemo: 'http://img3.wikia.nocookie.net/__cb20150402221254/leagueoflegends/images/0/04/TeemoSquare.png',

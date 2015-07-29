@@ -136,7 +136,7 @@ module.exports = React.createClass ({
                             <option value='Ziggs'>Ziggs</option>
                             <option value='Zilean'>Zilean</option>
                             <option value='Zyra'>Zyra</option>
-                        </select> <br/>
+                        </select><br/>
                         Choose your role... <br/>
                         <select name = 'select' className = 'role'>
                             <option value = 'Top'>Top</option>

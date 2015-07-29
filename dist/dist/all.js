@@ -32546,17 +32546,21 @@ module.exports = React.createClass({
                     { className: 'homeGuide firstGuide' },
                     React.createElement(
                         'a',
-                        { href: '#guide/champion7' },
-                        React.createElement('img', { className: 'searchChamp', src: 'http://img3.wikia.nocookie.net/__cb20150402220906/leagueoflegends/images/4/46/RivenSquare.png' }),
+                        { href: '#guide/champion10' },
+                        React.createElement('img', { className: 'searchChamp homeChamp', src: 'http://img3.wikia.nocookie.net/__cb20150402220906/leagueoflegends/images/4/46/RivenSquare.png' }),
                         React.createElement(
-                            'div',
-                            { className: 'homeTitle' },
-                            'How to not be awful as Riven'
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'searchUser' },
-                            'by ndfelps'
+                            'span',
+                            null,
+                            React.createElement(
+                                'div',
+                                { className: 'homeTitle' },
+                                'Faceroll Riven'
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'searchUser' },
+                                'by ndfelps'
+                            )
                         )
                     )
                 ),
@@ -32566,7 +32570,7 @@ module.exports = React.createClass({
                     React.createElement(
                         'a',
                         { href: '#guide/champion0' },
-                        React.createElement('img', { className: 'searchChamp', src: 'http://img1.wikia.nocookie.net/__cb20150402215200/leagueoflegends/images/c/cc/AatroxSquare.png' }),
+                        React.createElement('img', { className: 'searchChamp homeChamp', src: 'http://img1.wikia.nocookie.net/__cb20150402215200/leagueoflegends/images/c/cc/AatroxSquare.png' }),
                         React.createElement(
                             'div',
                             { className: 'homeTitle' },
@@ -32585,7 +32589,7 @@ module.exports = React.createClass({
                     React.createElement(
                         'a',
                         { href: '#guide/champion4' },
-                        React.createElement('img', { className: 'searchChamp', src: 'http://img4.wikia.nocookie.net/__cb20150402220409/leagueoflegends/images/e/ed/KogMawSquare.png' }),
+                        React.createElement('img', { className: 'searchChamp homeChamp', src: 'http://img4.wikia.nocookie.net/__cb20150402220409/leagueoflegends/images/e/ed/KogMawSquare.png' }),
                         React.createElement(
                             'div',
                             { className: 'homeTitle' },
@@ -32699,6 +32703,7 @@ var icons = {
     Soraka: 'http://img4.wikia.nocookie.net/__cb20150402221143/leagueoflegends/images/8/8d/SorakaSquare.png',
     Swain: 'http://img2.wikia.nocookie.net/__cb20150402221211/leagueoflegends/images/8/8c/SwainSquare.png',
     Syndra: 'http://img4.wikia.nocookie.net/__cb20150402221209/leagueoflegends/images/6/65/SyndraSquare.png',
+    TahmKench: 'http://static-img.kassad.in/champion/TahmKench.png',
     Talon: 'http://img1.wikia.nocookie.net/__cb20150402221208/leagueoflegends/images/f/f9/TalonSquare.png',
     Taric: 'http://img1.wikia.nocookie.net/__cb20150402221207/leagueoflegends/images/c/c4/TaricSquare.png',
     Teemo: 'http://img3.wikia.nocookie.net/__cb20150402221254/leagueoflegends/images/0/04/TeemoSquare.png',
@@ -32743,11 +32748,11 @@ var authData = ref.getAuth();
 function logArea() {
 	if (authData === null) {
 		$('.loginLink').show();
-		$('.logout').hide();
+		$('#logOut').hide();
 	} else {
 		$('.loginLink').hide();
-		$('.logout').show();
-		React.render(React.createElement(Logout, null), document.querySelector('.logoutCon'));
+		$('#logOut').show();
+		React.render(React.createElement(Logout, null), document.querySelector('#logOut'));
 	}
 }
 
@@ -33387,7 +33392,11 @@ module.exports = React.createClass({
                             { value: 'Tryndamere' },
                             'Tryndamere'
                         ),
-                        React.createElement('option', { value: 'TwistedFate' }),
+                        React.createElement(
+                            'option',
+                            { value: 'TwistedFate' },
+                            'Twisted Fate'
+                        ),
                         React.createElement(
                             'option',
                             { value: 'Twitch' },
@@ -33499,7 +33508,6 @@ module.exports = React.createClass({
                             'Zyra'
                         )
                     ),
-                    ' ',
                     React.createElement('br', null),
                     'Choose your role... ',
                     React.createElement('br', null),
@@ -33658,6 +33666,7 @@ module.exports = React.createClass({
                         '*you must ender a valid email'
                     ),
                     React.createElement('br', null),
+                    React.createElement('input', { type: 'text', className: 'avatar', placeholder: 'Avatar Link' }),
                     React.createElement('input', { type: 'password', className: 'password', placeholder: 'Password' }),
                     ' ',
                     React.createElement(
@@ -33693,6 +33702,7 @@ module.exports = React.createClass({
         var email = $('.email').val();
         var password = $('.password').val();
         var username = $('.username').val();
+        var avatar = $('.avatar').val();
         //Data validations
         var f = false;
         var l = false;
@@ -33750,7 +33760,8 @@ module.exports = React.createClass({
                 password: password,
                 firstName: firstName,
                 lastName: lastName,
-                username: username
+                username: username,
+                avatar: avatar
             };
             users.push(newUser);
             ref.createUser({
@@ -33790,10 +33801,10 @@ module.exports = React.createClass({
 			React.createElement(
 				'form',
 				{ onSubmit: this.returnGuides, className: 'searchForm' },
-				React.createElement('input', { type: 'text', className: 'searchText' }),
+				React.createElement('input', { type: 'text', className: 'searchText', placeholder: 'Search by champion or by role...' }),
 				React.createElement(
 					'button',
-					null,
+					{ className: 'searchButton' },
 					'Submit'
 				)
 			),
@@ -33823,7 +33834,6 @@ module.exports = React.createClass({
 					var ro = guideCount[key].role;
 					ro = ro.toUpperCase();
 					if (searched === champ || searched === ro) {
-						console.log(guideCount[key]);
 						result.push(guideCount[key]);
 					}
 				}
@@ -34068,6 +34078,7 @@ var guides = new Firebase("https://lolresource.firebaseio.com/guides");
 var ref = new Firebase("https://lolresource.firebaseio.com");
 var $ = require("jquery");
 var comments = new Firebase("https://lolresource.firebaseio.com/comments");
+var users = new Firebase("https://lolresource.firebaseio.com/users");
 var authData = ref.getAuth();
 
 var guideID = window.location.hash;
@@ -34100,6 +34111,8 @@ guides.on("value", function (snapshot) {
                 champion = "Dr. Mundo";
             } else if (champion === "Xin Zhao") {
                 champion = "Xin Zhao";
+            } else if (champion === "Tahm Kench") {
+                champion = "Tahm Kench";
             }
             $(".guideTitle").html(renderedGuide.title);
             $(".guideBody").html(renderedGuide.body);
@@ -34122,45 +34135,99 @@ module.exports = React.createClass({
             "section",
             { className: "renderedGuide" },
             React.createElement(
-                "div",
-                { className: "voteButton" },
-                React.createElement("div", { onClick: this.voteUp, className: "vote up" }),
-                React.createElement("div", { onClick: this.voteDown, className: "vote down" }),
-                React.createElement("div", { className: "count" })
-            ),
-            React.createElement(
-                "div",
-                null,
-                React.createElement("h2", { className: "guideTitle" }),
-                React.createElement("div", { className: "guideUser" })
-            ),
-            React.createElement("div", { className: "champLogo" }),
-            React.createElement("div", { className: "guideRole" }),
-            React.createElement("div", { className: "guideBody" }),
-            React.createElement(
-                "form",
-                { onSubmit: this.postComment, className: "commentForm" },
-                React.createElement("input", { type: "text", className: "commentText" }),
+                "section",
+                { className: "tabLinks" },
                 React.createElement(
-                    "button",
-                    null,
-                    "Submit"
+                    "div",
+                    { className: "tabLink" },
+                    React.createElement(
+                        "span",
+                        { onClick: this.showGuide },
+                        "Guide"
+                    )
+                ),
+                React.createElement(
+                    "div",
+                    { className: "tabLink" },
+                    React.createElement(
+                        "span",
+                        { onClick: this.showComments },
+                        "Comments"
+                    )
                 )
             ),
-            React.createElement("div", { className: "commentSection" })
+            React.createElement(
+                "section",
+                { className: "fullGuide page" },
+                React.createElement(
+                    "div",
+                    { className: "voteButton" },
+                    React.createElement("div", { onClick: this.voteUp, className: "vote up" }),
+                    React.createElement("div", { onClick: this.voteDown, className: "vote down" }),
+                    React.createElement("div", { className: "count" })
+                ),
+                React.createElement(
+                    "section",
+                    { className: "guideArea" },
+                    React.createElement(
+                        "div",
+                        null,
+                        React.createElement("h2", { className: "guideTitle" }),
+                        React.createElement("div", { className: "guideUser" })
+                    ),
+                    React.createElement("div", { className: "champLogo" }),
+                    React.createElement("div", { className: "guideRole" }),
+                    React.createElement("div", { className: "guideBody" })
+                )
+            ),
+            React.createElement(
+                "section",
+                { className: "commentArea page" },
+                React.createElement(
+                    "h3",
+                    null,
+                    "Comments"
+                ),
+                React.createElement("div", { className: "commentSection" }),
+                React.createElement(
+                    "form",
+                    { onSubmit: this.postComment, className: "commentForm" },
+                    React.createElement("textarea", { type: "text", className: "commentText" }),
+                    React.createElement("br", null),
+                    React.createElement(
+                        "button",
+                        { className: "commentButton" },
+                        "Submit"
+                    )
+                )
+            )
         );
     },
     postComment: function postComment(e) {
+        var user = authData["password"].email;
+        var avatar;
+        users.on("value", function (snapshot) {
+            var userList = snapshot.val();
+            for (var key in userList) {
+                if (userList[key].email === user) {
+                    user = userList[key].username;
+                    avatar = userList[key].avatar;
+                }
+            }
+        }, function (errorObject) {
+            console.log("The read failed: " + errorObject.code);
+        });
+
         var now = new Date();
         var text = $(".commentText").val();
-        var user = authData["password"].email;
         var id = guideID;
         if (text.length > 3) {
             var newComment = {
                 text: text,
                 user: user,
                 date: now,
-                id: id
+                id: id,
+                avatar: avatar
             };
             comments.push(newComment);
 
@@ -34179,6 +34246,14 @@ module.exports = React.createClass({
         newScore.transaction(function (current_value) {
             return (current_value || 0) + 1;
         });
+    },
+    showComments: function showComments(e) {
+        $(".page").hide();
+        $(".commentArea").show();
+    },
+    showGuide: function showGuide(e) {
+        $(".page").hide();
+        $(".fullGuide").show();
     }
 });
 
@@ -34189,12 +34264,26 @@ function loadComments() {
         for (var key in allComments) {
             if (allComments[key].id === guideID) {
                 var current = allComments[key];
-                $(".commentSection").append("<div class = 'comment'><div class = 'commentUser'>" + current.user + "</div><div class = 'commentBody'>" + current.text + "</div></div>");
+                $(".commentSection").append("<div class = 'comment'><div class = 'commentBody'>" + current.text + "</div><div class = 'commentUserSec'><img class = 'commentUser' src = '" + current.avatar + "''></img><br><div class = 'commentName'>" + current.user + "</div></div></div>");
             }
         }
     }, function (errorObject) {
         console.log("The read failed: " + errorObject.code);
     });
+}
+setInterval(checkLoad, 2000);
+
+function checkLoad() {
+    var linkToCheck = window.location.hash;
+    linkToCheck = linkToCheck.slice(7, 10);
+    var toCheck = $(".guideTitle").html();
+    if (linkToCheck === "cha" && !toCheck) {
+        setInterval(toReload, 1000);
+    }
+}
+
+function toReload() {
+    location.reload();
 }
 
 var icons = {
@@ -34293,6 +34382,7 @@ var icons = {
     Soraka: "http://img4.wikia.nocookie.net/__cb20150402221143/leagueoflegends/images/8/8d/SorakaSquare.png",
     Swain: "http://img2.wikia.nocookie.net/__cb20150402221211/leagueoflegends/images/8/8c/SwainSquare.png",
     Syndra: "http://img4.wikia.nocookie.net/__cb20150402221209/leagueoflegends/images/6/65/SyndraSquare.png",
+    TahmKench: "http://static-img.kassad.in/champion/TahmKench.png",
     Talon: "http://img1.wikia.nocookie.net/__cb20150402221208/leagueoflegends/images/f/f9/TalonSquare.png",
     Taric: "http://img1.wikia.nocookie.net/__cb20150402221207/leagueoflegends/images/c/c4/TaricSquare.png",
     Teemo: "http://img3.wikia.nocookie.net/__cb20150402221254/leagueoflegends/images/0/04/TeemoSquare.png",
@@ -34402,7 +34492,6 @@ function start(e) {
 	var app = Backbone.Router.extend(routerConfig);
 	var myRouter = new app();
 	Backbone.history.start();
-
 	function getAllChamps() {
 		$.get('https://na.api.pvp.net/api/lol/na/v1.2/champion?api_key=b2e96d04-1205-4644-967c-ae0fdd0690a5', storeChamps, 'json');
 	}
@@ -34437,7 +34526,6 @@ function start(e) {
 		});
 	}
 	function storeFreeChampsByName(val) {
-		console.log(val);
 		freeChampionsByName.push(val);
 	}
 	function renderFreeChamps() {
@@ -34453,7 +34541,6 @@ function start(e) {
 			}
 		});
 	}
-
 	renderFreeChamps();
 	var charPictures = {
 		Aatrox: '',
@@ -34465,31 +34552,31 @@ function start(e) {
 		Annie: '',
 		Ashe: '',
 		Azir: 'http://lolwp.com/wp-content/uploads/2014/08/Azir-wallpaper.jpg',
-		Bard: '',
+		Bard: 'http://lolwp.com/wp-content/uploads/2015/02/Bard-Classic-wallpaper.jpg',
 		Blitzcrank: '',
-		Brand: '',
+		Brand: 'http://lolwp.com/wp-content/uploads/Brand-Classic.jpg',
 		Braum: 'http://na.leagueoflegends.com/sites/default/files/styles/scale_xlarge/public/upload/b-splash.jpg?itok=2T_9VFCS',
 		Caitlyn: '',
 		Cassiopeia: '',
 		ChoGath: '',
 		Corki: 'http://www.leagueoflegendswallpapers.com/wp-content/uploads/2015/01/leagueoflegendwallpapers.com-corki.jpg',
-		Darius: '',
-		Diana: '',
+		Darius: 'http://lolwp.com/wp-content/uploads/Darius-Classic.jpg',
+		Diana: 'http://lolwp.com/wp-content/uploads/Diana-Classic-Splash.jpg',
 		DrMundo: 'http://lolwp.com/wp-content/uploads/Dr-Mundo-Original-Skin-Reworked.jpg',
 		Draven: '',
 		Ekko: '',
 		Elise: '',
-		Evelynn: '',
-		Ezreal: '',
+		Evelynn: 'http://www.hdwallpapersbucket.com/wp-content/uploads/2014/09/Evelynn-League-Of-Legends-Wallpaper-1.jpg',
+		Ezreal: 'http://lolwp.com/wp-content/uploads/ezreal.jpg',
 		FiddleSticks: 'http://lolwp.com/wp-content/uploads/Fiddlesticks_Splash_10.jpg',
 		Fiora: '',
 		Fizz: 'http://lolwp.com/wp-content/uploads/Fizz_splash_0.jpg',
 		Galio: '',
-		Gangplank: '',
+		Gangplank: 'http://lolwp.com/wp-content/uploads/Gangplank_Splash_0.jpg',
 		Garen: '',
 		Gnar: '',
 		Gragas: 'http://lolwp.com/wp-content/uploads/Gragas_Splash_0.jpg',
-		Graves: '',
+		Graves: 'http://lolwp.com/wp-content/uploads/Graves_Splash_0.jpg',
 		Hecarim: '',
 		Heimerdinger: '',
 		Irelia: '',
@@ -34501,12 +34588,12 @@ function start(e) {
 		Kalista: 'http://images7.alphacoders.com/553/553194.jpg',
 		Karma: '',
 		Karthus: '',
-		Kassadin: '',
+		Kassadin: 'http://lolwp.com/wp-content/uploads/Kassadin-Classic-Wallpaper.jpg',
 		Katarina: '',
-		Kayle: '',
+		Kayle: 'http://lolwp.com/wp-content/uploads/Kayle-Classic-Updated.jpg',
 		Kennen: '',
 		KhaZix: '',
-		KogMaw: '',
+		KogMaw: 'http://lolwp.com/wp-content/uploads/KogMaw_Splash_0.jpg',
 		LeBlanc: '',
 		LeeSin: '',
 		Leona: '',
@@ -34514,29 +34601,29 @@ function start(e) {
 		Lucian: '',
 		Lulu: '',
 		Lux: '',
-		Malphite: '',
+		Malphite: 'http://wfiles.brothersoft.com/l/league-of-legends-malphite_101807-1400x1050.jpg',
 		Malzahar: '',
 		Maokai: '',
 		MasterYi: '',
-		MissFortune: '',
+		MissFortune: 'http://lolwp.com/wp-content/uploads/Miss-Fortune-Classic-Reworked.jpg',
 		Mordekaiser: '',
 		Morgana: '',
-		Nami: '',
+		Nami: 'http://lolwp.com/wp-content/uploads/Nami-Classic.jpg',
 		Nasus: '',
-		Nautilus: '',
+		Nautilus: 'http://lolwp.com/wp-content/uploads/nautilus.jpg',
 		Nidalee: '',
 		Nocturne: '',
-		Nunu: '',
+		Nunu: 'http://lolwp.com/wp-content/uploads/Yeti_Splash_0.jpg',
 		Olaf: '',
 		Orianna: '',
 		Pantheon: '',
 		Poppy: '',
-		Quinn: '',
+		Quinn: 'http://lolwp.com/wp-content/uploads/2013/02/Quinn-Classic.jpg',
 		Rammus: 'http://lolwp.com/wp-content/uploads/rammus.jpg',
 		RekSai: '',
 		Renekton: '',
 		Rengar: '',
-		Riven: '',
+		Riven: 'http://lolwp.com/wp-content/uploads/2013/06/Riven-Classic.jpg',
 		Rumble: 'http://lolwp.com/wp-content/uploads/rumble-splash.jpg',
 		Ryze: 'http://lolwp.com/wp-content/uploads/Ryze_Splash_01.jpg',
 		Sejuani: '',
@@ -34547,27 +34634,28 @@ function start(e) {
 		Sion: '',
 		Sivir: '',
 		Skarner: '',
-		Sona: '',
+		Sona: 'http://na.leagueoflegends.com/sites/default/files/upload/art/bg_champion_sona_1920x1080_0.jpg',
 		Soraka: 'http://img1.wikia.nocookie.net/__cb20121002162226/leagueoflegends/images/6/66/Soraka_OriginalSkin.jpg',
-		Swain: '',
+		Swain: 'http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Swain_0.jpg',
 		Syndra: '',
+		TahmKench: 'http://news.cdn.leagueoflegends.com/public/images/pages/2015/tk/img/TK_Splash_WP.jpg',
 		Talon: '',
-		Taric: '',
+		Taric: 'http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Taric_0.jpg',
 		Teemo: 'http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Teemo_0.jpg',
 		Thresh: 'http://lolwp.com/wp-content/uploads/Thresh-Classic.jpg',
 		Tristana: '',
 		Trundle: '',
 		Tryndamere: '',
-		TwistedFate: '',
+		TwistedFate: 'http://lolwp.com/wp-content/uploads/Twisted-Fate-Splash-Updated.jpg',
 		Twitch: '',
 		Udyr: '',
 		Urgot: 'http://lolwp.com/wp-content/uploads/Urgot_splash.jpg',
 		Varus: 'http://lolwp.com/wp-content/uploads/Varus.jpg',
-		Vayne: '',
+		Vayne: 'http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Vayne_0.jpg',
 		Veigar: '',
 		Velkoz: 'http://lolwp.com/wp-content/uploads/2014/02/VelKoz.jpg',
 		Vi: '',
-		Viktor: '',
+		Viktor: 'http://lolwp.com/wp-content/uploads/viktor1.jpg',
 		Vladimir: '',
 		Volibear: '',
 		Warwick: 'http://lolwp.com/wp-content/uploads/Wolfman_Splash_0.jpg',
@@ -34576,7 +34664,7 @@ function start(e) {
 		XinZhao: '',
 		Yasuo: '',
 		Yorick: '',
-		Zac: '',
+		Zac: 'http://lolwp.com/wp-content/uploads/2013/03/Zac-Classic.jpg',
 		Zed: '',
 		Ziggs: '',
 		Zilean: '',
@@ -34585,11 +34673,11 @@ function start(e) {
 	function logArea() {
 		if (authData === null) {
 			$('.loginLink').show();
-			$('.logout').hide();
+			$('#logOut').hide();
 		} else {
 			$('.loginLink').hide();
-			$('.logout').show();
-			React.render(React.createElement(Logout, null), document.querySelector('.logoutCon'));
+			$('#logOut').show();
+			React.render(React.createElement(Logout, null), document.querySelector('#logOut'));
 		}
 	}
 }

@@ -7,12 +7,12 @@ var authData = ref.getAuth();
 function logArea() {
 		if(authData === null) {
 			$('.loginLink').show();
-		    $('.logout').hide();
+		    $('#logOut').hide();
 			
 		} else {
 			$('.loginLink').hide();
-		    $('.logout').show();
-			 React.render(<Logout/>, document.querySelector('.logoutCon'));
+		    $('#logOut').show();
+			 React.render(<Logout/>, document.querySelector('#logOut'));
 		}
 	}
 

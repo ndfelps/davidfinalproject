@@ -1,7 +1,7 @@
 var React = require('react');
 var $ = require('jquery');
 var ref = new Firebase("https://lolresource.firebaseio.com");
-var users = new Firebase("https://lolresource.firebaseio.com/users")
+var users = new Firebase("https://lolresource.firebaseio.com/users");
 
 module.exports = React.createClass ({
     render: function() {
@@ -14,6 +14,7 @@ module.exports = React.createClass ({
 						<input type = "text" className = "lastName" placeholder = "Last Name" /> <span className = "error lastError">*you must ender a valid name</span><br />
 						<input type = "text" className = "username" placeholder = "Username" /> <span className = "error signError">*you must ender a valid username</span><br />
 						<input type = "text" className = "email" placeholder = "Email" /> <span className = "error emailError">*you must ender a valid email</span><br />
+                        <input type = "text" className = "avatar" placeholder = "Avatar Link" />
 						<input type = "password" className = "password" placeholder = "Password" /> <span className = "error passError">*you must ender a valid password</span><br />
 						<button className = "signButton">Submit</button>
 					</form>
@@ -31,6 +32,7 @@ module.exports = React.createClass ({
         var email = $('.email').val();
         var password = $('.password').val();
         var username = $('.username').val();
+        var avatar = $('.avatar').val();
         //Data validations
         var f = false;
         var l = false;
@@ -88,7 +90,8 @@ module.exports = React.createClass ({
                 password: password,
                 firstName: firstName,
                 lastName: lastName,
-                username: username
+                username: username,
+                avatar: avatar
             };
             users.push(newUser);
             ref.createUser({

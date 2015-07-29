@@ -3,6 +3,7 @@ var guides = new Firebase("https://lolresource.firebaseio.com/guides");
 var ref = new Firebase("https://lolresource.firebaseio.com");
 var $ = require('jquery');
 var comments = new Firebase("https://lolresource.firebaseio.com/comments");
+var users = new Firebase("https://lolresource.firebaseio.com/users");
 var authData = ref.getAuth();
 
 var guideID = window.location.hash;
@@ -35,6 +36,8 @@ guides.on("value", function(snapshot) {
                 champion = "Dr. Mundo";
             } else if (champion === "Xin Zhao") {
                 champion = "Xin Zhao";
+            } else if (champion === "Tahm Kench") {
+                champion = "Tahm Kench";
             }
             $('.guideTitle').html(renderedGuide.title);
             $('.guideBody').html(renderedGuide.body);
@@ -53,45 +56,70 @@ module.exports = React.createClass ({
     render: function() {
         return(
             <section className = 'renderedGuide'>
-                <div className = "voteButton">
-                    <div onClick = {this.voteUp} className = "vote up"></div>
-                    <div onClick = {this.voteDown} className = "vote down"></div>
-                    <div className = "count"></div>
-                </div>
-                <div>
-                    <h2 className = 'guideTitle'>
-                    </h2>
-                    <div className = 'guideUser'>
+                <section className = 'tabLinks'>
+                    <div className = 'tabLink'><span onClick = {this.showGuide}>Guide</span></div>
+                    <div className = 'tabLink'><span onClick = {this.showComments}>Comments</span></div>
+                </section>
+                <section className = 'fullGuide page'>
+                    <div className = "voteButton">
+                        <div onClick = {this.voteUp} className = "vote up"></div>
+                        <div onClick = {this.voteDown} className = "vote down"></div>
+                        <div className = "count"></div>
                     </div>
-                </div>
-                <div className = 'champLogo'>
-                </div>
-                <div className = 'guideRole'>
-                </div>
-                <div className = 'guideBody'>
-                </div>
+                    <section className = 'guideArea'>
+                        <div>
+                            <h2 className = 'guideTitle'>
+                            </h2>
+                            <div className = 'guideUser'>
+                            </div>
+                        </div>
+                        <div className = 'champLogo'>
+                        </div>
+                        <div className = 'guideRole'>
+                        </div>
+                        <div className = 'guideBody'>
+                        </div>
+                    </section>
+                </section>
 
-                <form onSubmit = {this.postComment} className = 'commentForm'>
-                    <input type = 'text' className = 'commentText' />
-                    <button>Submit</button>
-                </form>
-                <div className = 'commentSection'>
-                </div>
-
+                <section className = 'commentArea page'>
+                    <h3>Comments</h3>
+                    <div className = 'commentSection'>
+                    </div>
+                    <form onSubmit = {this.postComment} className = 'commentForm'>
+                        <textarea type = 'text' className = 'commentText' /><br />
+                        <button className = 'commentButton'>Submit</button>
+                    </form>
+                </section>
             </section>
         );
     },
     postComment: function(e) {
+        var user = authData["password"].email;
+        var avatar;
+        users.on("value", function(snapshot) {
+            var userList = snapshot.val();
+            for (var key in userList) {
+                if (userList[key].email === user) {
+                    user = userList[key].username;
+                    avatar = userList[key].avatar;
+                }
+            }
+
+        }, function(errorObject) {
+            console.log("The read failed: " + errorObject.code);
+        })
+
         var now = new Date();
         var text = $('.commentText').val();
-        var user = authData["password"].email;
         var id = guideID;
         if (text.length > 3) {
             var newComment =  {
                 text: text,
                 user: user,
                 date: now,
-                id: id
+                id: id,
+                avatar: avatar
             }
             comments.push(newComment);
             
@@ -110,6 +138,14 @@ module.exports = React.createClass ({
         newScore.transaction(function (current_value) {
             return (current_value || 0) + 1;
         });
+    },
+    showComments: function(e) {
+        $('.page').hide();
+        $('.commentArea').show();
+    },
+    showGuide: function(e) {
+        $('.page').hide();
+        $('.fullGuide').show();
     }
 });
 
@@ -120,12 +156,26 @@ function loadComments() {
         for (var key in allComments) {
             if (allComments[key].id === guideID) {
                 var current = allComments[key];
-                $('.commentSection').append("<div class = 'comment'><div class = 'commentUser'>" + current.user + "</div><div class = 'commentBody'>" + current.text + "</div></div>")
+                $('.commentSection').append("<div class = 'comment'><div class = 'commentBody'>" + current.text + "</div><div class = 'commentUserSec'><img class = 'commentUser' src = '" + current.avatar + "''></img><br><div class = 'commentName'>" + current.user +"</div></div></div>")
             }
         }
     }, function(errorObject) {
         console.log("The read failed: " + errorObject.code);
     })
+}
+setInterval(checkLoad, 2000);
+
+function checkLoad() {
+    var linkToCheck = window.location.hash;
+    linkToCheck = linkToCheck.slice(7, 10);
+    var toCheck = $('.guideTitle').html();
+    if (linkToCheck === 'cha' && !toCheck) {
+        setInterval(toReload, 1000);
+    }
+}
+
+function toReload() {
+    location.reload();
 }
 
 var icons = {
@@ -224,6 +274,7 @@ var icons = {
     Soraka: 'http://img4.wikia.nocookie.net/__cb20150402221143/leagueoflegends/images/8/8d/SorakaSquare.png',
     Swain: 'http://img2.wikia.nocookie.net/__cb20150402221211/leagueoflegends/images/8/8c/SwainSquare.png',
     Syndra: 'http://img4.wikia.nocookie.net/__cb20150402221209/leagueoflegends/images/6/65/SyndraSquare.png',
+    TahmKench: 'http://static-img.kassad.in/champion/TahmKench.png',
     Talon: 'http://img1.wikia.nocookie.net/__cb20150402221208/leagueoflegends/images/f/f9/TalonSquare.png',
     Taric: 'http://img1.wikia.nocookie.net/__cb20150402221207/leagueoflegends/images/c/c4/TaricSquare.png',
     Teemo: 'http://img3.wikia.nocookie.net/__cb20150402221254/leagueoflegends/images/0/04/TeemoSquare.png',

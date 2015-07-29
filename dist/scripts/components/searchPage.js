@@ -7,8 +7,8 @@ module.exports = React.createClass ({
         return(
         	<section>
         		<form onSubmit = {this.returnGuides} className = 'searchForm'>
-        			<input type = 'text' className = 'searchText' />
-        			<button>Submit</button>
+        			<input type = 'text' className = 'searchText' placeholder = 'Search by champion or by role...'/>
+        			<button className = 'searchButton'>Submit</button>
         		</form>
         		<div className = 'searchResults'>
         		</div>
@@ -38,7 +38,6 @@ module.exports = React.createClass ({
 	        	var ro = guideCount[key].role;
 	        	ro = ro.toUpperCase();
 		    	if (searched === champ || searched === ro) {
-		    		console.log(guideCount[key]);
 		    		result.push(guideCount[key]);
 		    	}
 	    	}

@@ -73,7 +73,6 @@ function start(e) {
     var app = Backbone.Router.extend(routerConfig);
 	var myRouter = new app();
 	Backbone.history.start();
-
     function getAllChamps() {
     	$.get(
     		'https://na.api.pvp.net/api/lol/na/v1.2/champion?api_key=b2e96d04-1205-4644-967c-ae0fdd0690a5',
@@ -118,7 +117,6 @@ function start(e) {
     	})
     }
     function storeFreeChampsByName(val) {
-    	console.log(val);
     	freeChampionsByName.push(val);
     }
     function renderFreeChamps() {
@@ -134,9 +132,7 @@ function start(e) {
     		}
      	})
     }
-
-
-	renderFreeChamps();
+renderFreeChamps();
   var charPictures = {
 		Aatrox: '',
 		Ahri: 'http://img06.deviantart.net/7d80/i/2012/027/5/b/league_of_legends_ahri_1920x1080_sl_wallpaper_by_ruledragon-d4nr5oz.png',
@@ -147,31 +143,31 @@ function start(e) {
 		Annie: '',
 		Ashe: '',
 		Azir: 'http://lolwp.com/wp-content/uploads/2014/08/Azir-wallpaper.jpg',
-		Bard: '',
+		Bard: 'http://lolwp.com/wp-content/uploads/2015/02/Bard-Classic-wallpaper.jpg',
 		Blitzcrank: '',
-		Brand: '',
+		Brand: 'http://lolwp.com/wp-content/uploads/Brand-Classic.jpg',
 		Braum: 'http://na.leagueoflegends.com/sites/default/files/styles/scale_xlarge/public/upload/b-splash.jpg?itok=2T_9VFCS',
 		Caitlyn: '',
 		Cassiopeia: '',
 		ChoGath: '',
 		Corki: 'http://www.leagueoflegendswallpapers.com/wp-content/uploads/2015/01/leagueoflegendwallpapers.com-corki.jpg',
-		Darius: '',
-		Diana: '',
+		Darius: 'http://lolwp.com/wp-content/uploads/Darius-Classic.jpg',
+		Diana: 'http://lolwp.com/wp-content/uploads/Diana-Classic-Splash.jpg',
 		DrMundo: 'http://lolwp.com/wp-content/uploads/Dr-Mundo-Original-Skin-Reworked.jpg',
 		Draven: '',
 		Ekko: '',
 		Elise: '',
-		Evelynn: '',
-		Ezreal: '',
+		Evelynn: 'http://www.hdwallpapersbucket.com/wp-content/uploads/2014/09/Evelynn-League-Of-Legends-Wallpaper-1.jpg',
+		Ezreal: 'http://lolwp.com/wp-content/uploads/ezreal.jpg',
 		FiddleSticks: 'http://lolwp.com/wp-content/uploads/Fiddlesticks_Splash_10.jpg',
 		Fiora: '',
 		Fizz: 'http://lolwp.com/wp-content/uploads/Fizz_splash_0.jpg',
 		Galio: '',
-		Gangplank: '',
+		Gangplank: 'http://lolwp.com/wp-content/uploads/Gangplank_Splash_0.jpg',
 		Garen: '',
 		Gnar: '',
 		Gragas: 'http://lolwp.com/wp-content/uploads/Gragas_Splash_0.jpg',
-		Graves: '',
+		Graves: 'http://lolwp.com/wp-content/uploads/Graves_Splash_0.jpg',
 		Hecarim: '',
 		Heimerdinger: '',
 		Irelia: '',
@@ -183,12 +179,12 @@ function start(e) {
 		Kalista: 'http://images7.alphacoders.com/553/553194.jpg',
 		Karma: '',
 		Karthus: '',
-		Kassadin: '',
+		Kassadin: 'http://lolwp.com/wp-content/uploads/Kassadin-Classic-Wallpaper.jpg',
 		Katarina: '',
-		Kayle: '',
+		Kayle: 'http://lolwp.com/wp-content/uploads/Kayle-Classic-Updated.jpg',
 		Kennen: '',
 		KhaZix: '',
-		KogMaw: '',
+		KogMaw: 'http://lolwp.com/wp-content/uploads/KogMaw_Splash_0.jpg',
 		LeBlanc: '',
 		LeeSin: '',
 		Leona: '',
@@ -196,29 +192,29 @@ function start(e) {
 		Lucian: '',
 		Lulu: '',
 		Lux: '',
-		Malphite: '',
+		Malphite: 'http://wfiles.brothersoft.com/l/league-of-legends-malphite_101807-1400x1050.jpg',
 		Malzahar: '',
 		Maokai: '',
 		MasterYi: '',
-		MissFortune: '',
+		MissFortune: 'http://lolwp.com/wp-content/uploads/Miss-Fortune-Classic-Reworked.jpg',
 		Mordekaiser: '',
 		Morgana: '',
-		Nami: '',
+		Nami: 'http://lolwp.com/wp-content/uploads/Nami-Classic.jpg',
 		Nasus: '',
-		Nautilus: '',
+		Nautilus: 'http://lolwp.com/wp-content/uploads/nautilus.jpg',
 		Nidalee: '',
 		Nocturne: '',
-		Nunu: '',
+		Nunu: 'http://lolwp.com/wp-content/uploads/Yeti_Splash_0.jpg',
 		Olaf: '',
 		Orianna: '',
 		Pantheon: '',
 		Poppy: '',
-		Quinn: '',
+		Quinn: 'http://lolwp.com/wp-content/uploads/2013/02/Quinn-Classic.jpg',
 		Rammus: 'http://lolwp.com/wp-content/uploads/rammus.jpg',
 		RekSai: '',
 		Renekton: '',
 		Rengar: '',
-		Riven: '',
+		Riven: 'http://lolwp.com/wp-content/uploads/2013/06/Riven-Classic.jpg',
 		Rumble: 'http://lolwp.com/wp-content/uploads/rumble-splash.jpg',
 		Ryze: 'http://lolwp.com/wp-content/uploads/Ryze_Splash_01.jpg',
 		Sejuani: '',
@@ -229,27 +225,28 @@ function start(e) {
 		Sion: '',
 		Sivir: '',
 		Skarner: '',
-		Sona: '',
+		Sona: 'http://na.leagueoflegends.com/sites/default/files/upload/art/bg_champion_sona_1920x1080_0.jpg',
 		Soraka: 'http://img1.wikia.nocookie.net/__cb20121002162226/leagueoflegends/images/6/66/Soraka_OriginalSkin.jpg',
-		Swain: '',
+		Swain: 'http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Swain_0.jpg',
 		Syndra: '',
+		TahmKench: 'http://news.cdn.leagueoflegends.com/public/images/pages/2015/tk/img/TK_Splash_WP.jpg',
 		Talon: '',
-		Taric: '',
+		Taric: 'http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Taric_0.jpg',
 		Teemo: 'http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Teemo_0.jpg',
 		Thresh: 'http://lolwp.com/wp-content/uploads/Thresh-Classic.jpg',
 		Tristana: '',
 		Trundle: '',
 		Tryndamere: '',
-		TwistedFate: '',
+		TwistedFate: 'http://lolwp.com/wp-content/uploads/Twisted-Fate-Splash-Updated.jpg',
 		Twitch: '',
 		Udyr: '',
 		Urgot: 'http://lolwp.com/wp-content/uploads/Urgot_splash.jpg',
 		Varus: 'http://lolwp.com/wp-content/uploads/Varus.jpg',
-		Vayne: '',
+		Vayne: 'http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Vayne_0.jpg',
 		Veigar: '',
 		Velkoz: 'http://lolwp.com/wp-content/uploads/2014/02/VelKoz.jpg',
 		Vi: '',
-		Viktor: '',
+		Viktor: 'http://lolwp.com/wp-content/uploads/viktor1.jpg',
 		Vladimir: '',
 		Volibear: '',
 		Warwick: 'http://lolwp.com/wp-content/uploads/Wolfman_Splash_0.jpg',
@@ -258,7 +255,7 @@ function start(e) {
 		XinZhao: '',
 		Yasuo: '',
 		Yorick: '',
-		Zac: '',
+		Zac: 'http://lolwp.com/wp-content/uploads/2013/03/Zac-Classic.jpg',
 		Zed: '',
 		Ziggs: '',
 		Zilean: '',
@@ -267,12 +264,12 @@ function start(e) {
 	function logArea() {
 		if(authData === null) {
 			$('.loginLink').show();
-		    $('.logout').hide();
+		    $('#logOut').hide();
 			
 		} else {
 			$('.loginLink').hide();
-		    $('.logout').show();
-			 React.render(<Logout/>, document.querySelector('.logoutCon'));
+		    $('#logOut').show();
+			 React.render(<Logout/>, document.querySelector('#logOut'));
 		}
 	}
 }

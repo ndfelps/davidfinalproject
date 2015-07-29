@@ -19,20 +19,44 @@ header {
 	overflow: hidden;
 	padding-top: 1.5%;
 	width: 100%;
+	background-image: url(http://orig15.deviantart.net/84be/f/2014/074/a/4/league_of_legends_wallpaper_panel_art_by_wishlah-d7acxno.png);
+	background-position: 0px 0px center;
+	background-size: cover;
+	background-repeat: no-repeat;
 }
 #side {
 	background-color: rgb(100, 100, 100);	
-	float: left;
-	height: 121%;
+	position: absolute;
+	width: 175px;
+	height: 100%;
+	min-height: 1350px;
 	margin-right: 10px;
 	overflow: hidden;
+	color: white;
+}
+.logoLink {
+	width: 120px;
+	margin-left: 45%;
 }
 .topNav {
-	background-color: transparent;
 	width: 50px;
 	height: 20px;
-	font-size: 10px;
+	font-size: 12px;
 	float: right;
+	margin-top: 5%;
+	margin-bottom: 1%;
+}
+.topNavLink {
+	background-color: rgba(128, 128, 128, .8);
+	z-index: -1;
+	border-radius: 2em;
+	text-align: center;
+	padding-top: .7%;
+	margin-top: 5%;
+	margin-bottom: 1%;
+}
+.topNavLink:hover {
+	background-color: rgba(200, 200, 200, .9);
 }
 ul {
 	font-size: 10px;
@@ -55,8 +79,15 @@ a {
 .con {
 	padding: 15px;
 }
+#logOut {
+	vertical-align: center;
+	text-align: center;
+	padding-bottom: .3%;
+	padding-top: .4%;
+}
 #sett {
 	margin-left: 0px;
+	margin-right: 5px;
 }
 .error {
     font-size: 0.8em;
@@ -69,13 +100,12 @@ a {
 }
 .logoCon {
 	padding-top: 20px;
-	width: 90px;
+	width: 110px;
 	margin-right: 0px;
-	margin-left: 45%;
 }
 .logo {
 	background-image: url(http://orig12.deviantart.net/00f5/f/2012/178/8/0/league_of_legends_v3_by_polishxcii-d554d4f.png) !important;
-	width: 100px;
+	width: 110px;
 	height: 90px;
 	background-repeat: no-repeat;
 	z-index: -1;
@@ -109,21 +139,35 @@ a {
 }
 #container {
 	padding-left: 5px;
-	margin-left: 5px;
-}
-.logoutCon {
-	overflow: hidden;
-	margin: 0px;
-}
-.logoutCon:hover {
-	cursor: pointer;
+	margin-left: 25%;
+	height: 1330px;
 }
 .searchResults {
 	height: 100px;
-	width: 70%;
+	width: 50%;
+	margin-left: 0px;
+	margin-right: 100%;
 }
 .searchForm {
 	margin-bottom: 10px;
+	margin-left: 0%;
+}
+.searchText {
+	height: 30px;
+	width: 320px;
+	margin-right: 0px;
+	font-size: 16px;
+	margin-left: 0px;
+}
+.searchButton {
+	height: 34px;
+	font-size: 16px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	margin-left: 0px;
+	color: white;
+	background-color: rgb(47, 213, 101);
+	border: none;
 }
 .guideLink {
 	color: black;
@@ -134,18 +178,20 @@ a {
 	text-decoration: none;
 	background-color: grey;
 	padding: 3px;
+	width: 80%;
+	margin-left: 30%;
+	text-align: center;
 }
 .footer {
 	background-color: black;
 	text-align: center;
 	color: white;
 	float: left;
-	width: 100%;
+	width: 175px;
 }
 .disclaimer {
 	font-size: 8px;
 	width: 200px;
-	margin-left: 33%;
 }
 .main {
 	margin: 0px;
@@ -154,6 +200,8 @@ a {
 .voteButton {
 	float: right;
 }
+
+
 #searchLink {
 	margin-right: 5px;
 }
@@ -169,23 +217,70 @@ a {
 	font-size: 8px;
 	font-style: italic;
 }
+
+
 .comment {
-	border-style: solid;
-	border-width: 2px;
-	border-color: black;
-	width: 60%;
+	width: 80%;
+	margin-left: 18%;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: lightgrey; 
+	padding-top: 8px;
 }
 .comment * {
-	display: inline;
+	display: inline-block;
+}
+.commentArea {
+	width: 92%;
+	display: none;
+	margin-right: 90%;
+}
+.commentUserSec {
+	height: 90px;
+	margin-right: 60px;
+	float: left;
+	overflow: hidden;
+	padding-bottom: 10px;
+}
+.commentName {
+	margin-left: 10%;
 }
 .commentUser {
-	background-color: darkgrey;
-	color: black; padding-right: 10px;
+	width: 75px;
+	height: 75px;
+	border-radius: 50px;
 }
 .commentBody {
-	background-color: lightgrey;
 	color: black;
+	margin-top: 5%;
+	height: 100px;
+	max-width: 50%;
 }
+.commentForm {
+	margin-left: 18%;
+	margin-top: 30px;
+}
+.commentText {
+	height: 150px;
+	width: 73%;
+	margin: none;
+}
+.commentName {
+
+}
+.commentButton {
+	width: 75%;
+	margin-top: 0px;
+	background-color: rgb(47, 213, 101);
+	border: none;
+	border-radius: 1em;
+}
+.commentButton:hover {
+	background-color: rgba(47, 213, 101, .7);
+	cursor: pointer;
+}
+
+
 .voteButton {
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -239,9 +334,9 @@ a {
 	opacity: 1;
 }
 .news {
-	width: 60%;
-	margin-left: 30px;
+	width: 65%;
 	line-height: 25px;
+	text-align: left;
 }
 .homeGuide {
 	display: inline-block;
@@ -259,7 +354,39 @@ a {
 	height: 250px;
 }
 
-
+.guideArea {
+	margin-right: 20%;
+}
+.searchForm {
+	margin-top: 30px;
+	margin-left: 15%;
+}
+.guideRole {
+	padding-bottom: 30px;
+}
+.tabLinks {
+	width: 90%;
+	text-align: center;
+}
+.tabLink {
+	margin-right: 15%;
+	margin-left: 15%;
+	display: inline;
+	padding: 3px;
+	border-radius: 10px;
+	background-color: rgba(38, 85, 0, .5);
+}
+.tabLink:hover {
+	cursor: pointer;
+	background-color: rgb(166, 226, 45);
+}
+.renderedGuide {
+	margin-top: 50px;
+	margin-right: 10%;
+}
+h3 {
+	text-align: center;
+}
 
 @media (max-width: 680px) {
 	#side {
@@ -268,13 +395,34 @@ a {
 	.topNav {
 		width: 32%;
 		font-size: 12px;
+		text-align: center;
 	}
 	.logoCon {
-		margin-left: 40%;
+		margin-right: 100%;
+	}
+	#container {
+		margin-left: 10%;
+	}
+	.news {
+		width: 80%;
+	}
+	.searchForm {
+		.margin-left: 10%;
+	}
+	.footer {
+		width: 100%;
+		margin-top: 80%;
+	}
+	.disclaimer {
+		text-align: center;
+		display: block;
+		margin-left: 27%;
 	}
 }
-
-
-
+@media only screen and (max-device-width: 480px){
+	#side {
+		display: none;
+	}
+}
 
 
